@@ -148,27 +148,34 @@ struct RevRegFile {
   uint32_t cost;                    ///< RevRegFile: Cost of the instruction
   bool trigger;                     ///< RevRegFile: Has the instruction been triggered?
   unsigned Entry;                   ///< RevRegFile: Instruction entry
+  RevTracer* tracer;                ///< RevRegFile: optional tracer
 
   explicit RevRegFile() = default;  // prevent aggregate initialization
 
   /// GetX: Get the specifed X register cast to a specific integral type
   template<typename T>
   T GetX(const RevFeature* F, size_t rs) const {
-    if( F->IsRV32() ){
-      return rs ? T(RV32[rs]) : T(0);
-    }else{
-      return rs ? T(RV64[rs]) : T(0);
-    }
+    T res;
+    if( F->IsRV32() )
+      res = rs ? T(RV32[rs]) : T(0);
+    else
+      res = rs ? T(RV64[rs]) : T(0);
+    if (tracer) tracer->regRead(rs,(uint64_t) res);
+    return res;
   }
 
   /// SetX: Set the specifed X register to a specific value
   template<typename T>
   void SetX(const RevFeature* F, size_t rd, T val) {
+    T res;
     if( F->IsRV32() ){
-      RV32[rd] = rd ? uint32_t(val) : uint32_t{0};
+      res = rd ? uint32_t(val) : uint32_t{0};
+      RV32[rd] = res;
     }else{
-      RV64[rd] = rd ? uint64_t(val) : uint64_t{0};
+      res = rd ? uint64_t(val) : uint64_t{0};
+      RV64[rd] = res;
     }
+    if (tracer) tracer->regWrite(rd, (uint64_t) res);
   }
 
   /// GetPC: Get the Program Counter
@@ -185,8 +192,10 @@ struct RevRegFile {
   void SetPC(const RevFeature* F, T val) {
     if( F->IsRV32() ){
       RV32_PC = static_cast<uint32_t>(val);
+      if (tracer) tracer->pcWrite(RV32_PC);
     }else{
       RV64_PC = static_cast<uint64_t>(val);
+      if (tracer) tracer->pcWrite(RV64_PC);
     }
   }
 
@@ -195,8 +204,10 @@ struct RevRegFile {
   void AdvancePC(const RevFeature* F, T bytes) {
     if ( F->IsRV32() ) {
       RV32_PC += bytes;
+      if (tracer) tracer->pcWrite(RV32_PC);
     }else{
       RV64_PC += bytes;
+      if (tracer) tracer->pcWrite(RV32_PC);
     }
   }
 

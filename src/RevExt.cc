@@ -14,10 +14,6 @@ using namespace SST::RevCPU;
 // select tracer output on execute
 #define TRACE_EXECUTE 0
 
-// assign to specific tracer before exec phase
-RevTracer* RevExt::Tracer = nullptr;
-
-
 bool RevExt::Execute(unsigned Inst, RevInst payload, uint16_t HartID){
 
   // ensure that the target instruction is within scope

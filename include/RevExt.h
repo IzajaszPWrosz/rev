@@ -31,6 +31,8 @@
 
 using namespace SST::RevCPU;
 
+// TODO remove
+#if 0
 // Tracer macros
 #ifndef NO_REV_TRACER
 #define __SST_REVCPU_TRACER_MACROS__
@@ -62,6 +64,7 @@ using namespace SST::RevCPU;
 #define TRC64WR(reg0)
 #define TRC32PC()
 #define TRC64PC()
+#endif
 #endif
 
 namespace SST::RevCPU{
@@ -112,9 +115,6 @@ struct RevExt{
   ///         such that the currently executing RevThreadCtx is the one
   ///         whose register file is operated on
   void SetRegFile(RevRegFile* RegFile) { regFile = RegFile; }
-
-  // Temporary convenience for tracing prototype
-  static RevTracer* Tracer;
 
 protected:
   RevFeature *feature;  ///< RevExt: feature object

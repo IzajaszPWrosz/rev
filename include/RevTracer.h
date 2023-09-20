@@ -122,13 +122,14 @@ namespace SST{
       isa_parser_t* isaParser;
       disassembler_t* diasm;
       #endif
-      bool outputEnabled;   // disable output but continue capturing
-      bool memTraceEnable; // used to avoid memory tracing not related to instruction.
+      bool outputEnabled;     // disable output but continue capturing
+      bool memTraceEnable;    // used to avoid memory tracing not related to instruction.
       TraceEvents_t events;
       std::vector<TraceRec_t> traceRecs;
       uint64_t pc;
       uint32_t insn;
       std::map<uint64_t,std::string>* traceSymbols;
+      uint64_t lastPC = 0;    // avoid displaying sequential addresses
     
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);

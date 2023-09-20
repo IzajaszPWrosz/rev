@@ -1845,9 +1845,9 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
       // -- END new pipelining implementation
 
       // Tracer context for execution
-      RevExt::Tracer = tracer;
       mem->SetTracer(tracer);
-
+      RegFile->tracer = tracer;
+    
       #if 0
       uint64_t DbgPC=0x101f0;
       if (ExecPC==DbgPC) {

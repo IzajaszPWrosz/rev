@@ -190,10 +190,15 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner()
                 break;
             case PcWrite:
                 // a:pc
-                ss_rw << "pc<-0x" << hex << r.a;
-                if (traceSymbols and (traceSymbols->find(r.a) != traceSymbols->end()))
-                    ss_rw << " <" << traceSymbols->at(r.a) << ">";
-                ss_rw << " ";
+                uint64_t pc = r.a;
+                if ( lastPC+4 != pc ) { 
+                    // only render if non-sequential instruction
+                    ss_rw << "pc<-0x" << hex << pc;
+                    if (traceSymbols and (traceSymbols->find(pc) != traceSymbols->end()))
+                        ss_rw << " <" << traceSymbols->at(pc) << ">";
+                    ss_rw << " ";
+                }
+                lastPC = pc;
                 break;
         }
     }
