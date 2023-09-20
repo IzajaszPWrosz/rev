@@ -85,7 +85,7 @@ message (LDFLAGS="${LDFLAGS}")
 #------------------------------------------------------------------------
 #-- PAN
 #------------------------------------------------------------------------
-option(PAN_ENABLED "Compile PAN into core" OFF)
+option(PAN_ENABLED "Compile PAN into core" ON)
 if(${PAN_ENABLED})
   add_definitions(-D_PAN_)
 endif()
