@@ -6,3 +6,4 @@ src/librevcpu.so
 *.dylib
 .#*
 *~
+.gdb_history

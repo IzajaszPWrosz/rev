@@ -12,12 +12,13 @@
 #define _SST_REVCPU_REVEXT_H_
 
 // -- SST Headers
-#include <sst/core/sst_config.h>
-#include <sst/core/component.h>
+#include "SST.h"
 
 // -- Standard Headers
 #include <string>
 #include <cmath>
+#include <utility>
+#include <vector>
 
 // -- RevCPU Headers
 #include "RevInstTable.h"
@@ -63,64 +64,71 @@ using namespace SST::RevCPU;
 #define TRC64PC()
 #endif
 
-namespace SST{
-  namespace RevCPU{
-    class RevExt{
-    public:
-      /// RevExt: standard constructor
-      RevExt( std::string Name, RevFeature *Feature,
-              RevRegFile *RegFile, RevMem *RevMem,
-              SST::Output *Output );
+namespace SST::RevCPU{
 
-      /// RevExt: standard destructor
-      ~RevExt();
+struct RevExt{
+  /// RevExt: standard constructor
+  RevExt( std::string Name, RevFeature *Feature,
+          RevRegFile *RegFile, RevMem *RevMem,
+          SST::Output *Output )
+    : feature(Feature), mem(RevMem), name(Name), output(Output) {
+        regFile = RegFile;
+      }
 
-      /// RevExt: sets the internal instruction table
-      void SetTable(std::vector<RevInstEntry> InstVect);
+  /// RevExt: standard destructor. virtual so that Extensions[i] can be deleted
+  virtual ~RevExt() = default;
 
-      /// RevExt: sets the internal compressed instruction table
-      void SetCTable(std::vector<RevInstEntry> InstVect);
+  /// RevExt: sets the internal instruction table
+  void SetTable(std::vector<RevInstEntry> InstVect){
+    table = std::move(InstVect);
+  }
 
-      /// RevExt: sets the optional table (used for variant-specific compressed encodings)
-      void SetOTable(std::vector<RevInstEntry> InstVect);
+  /// RevExt: sets the internal compressed instruction table
+  void SetCTable(std::vector<RevInstEntry> InstVect){
+    ctable = std::move(InstVect);
+  }
 
-      /// RevExt: retrieve the extension name
-      std::string GetName() { return name; }
+  /// RevExt: sets the optional table (used for variant-specific compressed encodings)
+  void SetOTable(std::vector<RevInstEntry> InstVect){
+    otable = std::move(InstVect);
+  }
 
-      /// RevExt: baseline execution function
-      bool Execute(unsigned Inst, RevInst Payload, uint16_t threadID);
+  /// RevExt: retrieve the extension name
+  const std::string& GetName() const { return name; }
 
-      /// RevExt: retrieves the extension's instruction table
-      std::vector<RevInstEntry> GetInstTable() { return table; }
+  /// RevExt: baseline execution function
+  bool Execute(unsigned Inst, RevInst Payload, uint16_t threadID);
 
-      /// RevExt: retrieves the extension's compressed instruction table
-      std::vector<RevInstEntry> GetCInstTable() { return ctable; }
+  /// RevExt: retrieves the extension's instruction table
+  const std::vector<RevInstEntry>& GetInstTable() { return table; }
 
-      /// RevExt: retrieves the extension's optional instruction table
-      std::vector<RevInstEntry> GetOInstTable() { return otable; }
+  /// RevExt: retrieves the extension's compressed instruction table
+  const std::vector<RevInstEntry>& GetCInstTable() { return ctable; }
 
-      /// RevExt: updates the RegFile pointer prior to instruction execution
-      ///         such that the currently executing RevThreadCtx is the one 
-      ///         whose register file is operated on
-      void SetRegFile(RevRegFile* RegFile) { regFile = RegFile; }
+  /// RevExt: retrieves the extension's optional instruction table
+  const std::vector<RevInstEntry>& GetOInstTable() { return otable; }
 
-      // Temporary convenience for tracing prototype
-      static RevTracer* Tracer;
+  /// RevExt: updates the RegFile pointer prior to instruction execution
+  ///         such that the currently executing RevThreadCtx is the one
+  ///         whose register file is operated on
+  void SetRegFile(RevRegFile* RegFile) { regFile = RegFile; }
 
-    protected:
-      RevFeature *feature;  ///< RevExt: feature object
-      RevRegFile* regFile;  ///< RevExt: register file object
-      RevMem *mem;          ///< RevExt: memory object
+  // Temporary convenience for tracing prototype
+  static RevTracer* Tracer;
 
-    private:
-      std::string name;                 ///< RevExt: extension name
-      SST::Output *output;              ///< RevExt: output handler
-      std::vector<RevInstEntry> table;  ///< RevExt: instruction table
-      std::vector<RevInstEntry> ctable; ///< RevExt: compressed instruction table
-      std::vector<RevInstEntry> otable; ///< RevExt: optional compressed instruction table
+protected:
+  RevFeature *feature;  ///< RevExt: feature object
+  RevRegFile* regFile;  ///< RevExt: register file object
+  RevMem *mem;          ///< RevExt: memory object
 
-    }; // class RevExt
-  } // namespace RevCPU
-} // namespace SST
+private:
+  std::string name;                 ///< RevExt: extension name
+  SST::Output *output;              ///< RevExt: output handler
+  std::vector<RevInstEntry> table;  ///< RevExt: instruction table
+  std::vector<RevInstEntry> ctable; ///< RevExt: compressed instruction table
+  std::vector<RevInstEntry> otable; ///< RevExt: optional compressed instruction table
+
+}; // class RevExt
+} // namespace SST::RevCPU
 
 #endif

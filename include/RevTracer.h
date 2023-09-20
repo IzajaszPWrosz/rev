@@ -106,7 +106,7 @@ namespace SST{
       // disable it again.
 
       void regRead4Mem(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1);
-      void memWrite(uint64_t adr, unsigned len, void *data);
+      void memWrite(uint64_t adr, unsigned len, const void *data);
       void memRead(uint64_t adr, unsigned len, void *data);
       void pcWrite(uint64_t newpc);
 

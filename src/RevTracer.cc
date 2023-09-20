@@ -103,7 +103,7 @@ void SST::RevCPU::RevTracer::regRead4Mem(uint8_t r0, uint64_t v0, uint8_t r1, ui
     memTraceEnable = true;
 }
 
-void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len, void *data)
+void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len,  const void *data)
 {
     if (!memTraceEnable) return;
     memTraceEnable=false;
