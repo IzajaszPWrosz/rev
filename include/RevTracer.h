@@ -92,25 +92,17 @@ namespace SST{
       bool OutputEnabled();
 
       // 32 or 64 bit integer register file captures
-      // Assumes max 2 read ports and 1 write port
       void regRead(uint8_t r, uint64_t v);
-      void regRead(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1);
-      void regRead(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1, uint8_t r2, uint64_t v2);
       void regWrite(uint8_t r, uint64_t v);
 
-      // Within the generic read and write functions in RevMem
-      // I don't know how to differentiate initial loader, cache
-      // and other activity not initiated by user assembly code.
-      // For the protype, reading the source register will enable
-      // the memory trace. The memory trace capture will then 
-      // disable it again.
-
-      void regRead4Mem(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1);
+      // memory requests
       void memWrite(uint64_t adr, unsigned len, const void *data);
       void memRead(uint64_t adr, unsigned len, void *data);
+
+      // program counter
       void pcWrite(uint64_t newpc);
 
-      // output 
+      // output at end of cycle with an executed instruction
       std::string RenderOneLiner();
       void SetOutputEnable(bool e) {outputEnabled=e;}
       void Reset();
@@ -123,7 +115,6 @@ namespace SST{
       disassembler_t* diasm;
       #endif
       bool outputEnabled;     // disable output but continue capturing
-      bool memTraceEnable;    // used to avoid memory tracing not related to instruction.
       TraceEvents_t events;
       std::vector<TraceRec_t> traceRecs;
       uint64_t pc;

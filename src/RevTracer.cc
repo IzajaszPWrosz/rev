@@ -21,8 +21,7 @@ using namespace SST::RevCPU;
 using namespace std;
 
 RevTracer::RevTracer(unsigned Verbosity, std::string Name)
-: name(Name), outputEnabled(true), memTraceEnable(false), insn(0),
-  traceSymbols(nullptr) {}
+: name(Name), outputEnabled(true), insn(0), traceSymbols(nullptr) {}
 
 SST::RevCPU::RevTracer::~RevTracer()
 {
@@ -78,35 +77,13 @@ void SST::RevCPU::RevTracer::regRead(uint8_t r, uint64_t v)
     traceRecs.emplace_back(TraceRec_t(RegRead,r,v));
 }
 
-void SST::RevCPU::RevTracer::regRead(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1)
-{
-   //regReads.emplace_back(TraceRegister_t(r0,v0), TraceRegister_t(r1,v1));
-   traceRecs.emplace_back(TraceRec_t(RegRead,r0,v0));
-   traceRecs.emplace_back(TraceRec_t(RegRead,r1,v1));
-}
-
-void SST::RevCPU::RevTracer::regRead(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1, uint8_t r2, uint64_t v2)
-{
-    traceRecs.emplace_back(TraceRec_t(RegRead,r0,v0));
-    traceRecs.emplace_back(TraceRec_t(RegRead,r1,v1));
-    traceRecs.emplace_back(TraceRec_t(RegRead,r2,v2));
-}
-
 void SST::RevCPU::RevTracer::regWrite(uint8_t r, uint64_t v)
 {
     traceRecs.emplace_back(TraceRec_t(RegWrite,r,v));
 }
 
-void SST::RevCPU::RevTracer::regRead4Mem(uint8_t r0, uint64_t v0, uint8_t r1, uint64_t v1)
-{
-    regRead(r0,v0,r1,v1);
-    memTraceEnable = true;
-}
-
 void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len,  const void *data)
 {
-    if (!memTraceEnable) return;
-    memTraceEnable=false;
     // Only tracing the first 64 bytes. Retaining pointer in case we change that.
     uint64_t d = *((uint64_t*) data);
     if (len<8) {
@@ -120,8 +97,6 @@ void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len,  const void *d
 
 void SST::RevCPU::RevTracer::memRead(uint64_t adr, unsigned len, void *data)
 {
-    if (!memTraceEnable) return;
-    memTraceEnable=false;
     uint64_t d = *((uint64_t*) data);
     traceRecs.emplace_back(TraceRec_t(MemLoad,adr,len,d)); 
 }
