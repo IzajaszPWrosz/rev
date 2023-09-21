@@ -1861,6 +1861,11 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
                     "Error: failed to execute instruction at PC=%" PRIx64 ".", ExecPC );
       }
 
+      // need to be able to differentiate the initiator to avoid cluttering
+      // trace with things like instruction fetches. This rather annoying 
+      // overhead contains memory tracing to just the events occuring on the instruction.
+      mem->SetTracer(nullptr);
+
       // Conditionally trace
       if (tracer) {
         // Render instruction summary after execution
