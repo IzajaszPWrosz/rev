@@ -1369,9 +1369,11 @@ RevInst RevProc::DecodeInst(){
   }
 
   if(0 != Inst){
+    #ifdef NO_REV_TRACER
     output->verbose(CALL_INFO, 6, 0,
                     "Core %u ; Thread %d; PC:InstPayload = 0x%" PRIx64 ":0x%" PRIx32 "\n",
                     id, HartToDecode, PC, Inst);
+    #endif
   }else{
     output->fatal(CALL_INFO, -1,
                   "Error: Core %u failed to decode instruction at PC=0x%" PRIx64 "; Inst=%" PRIu32 "\n",
@@ -1706,6 +1708,7 @@ uint16_t RevProc::GetHartID()const{
       }
       if(HART_CTS[nextID]){ break; };
     }
+    // TODO trace inclusion and #ifdef NO_REV_TRACER
     output->verbose(CALL_INFO, 6, 0,
                     "Core %u ; Thread switch from %d to %d\n",
                     id, HartToDecode, nextID);
@@ -1803,10 +1806,12 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
     // HartToExec = HartToDecode;
     RegFile->trigger = true;
 
+    #ifdef NO_REV_TRACER
     // pull the PC
     output->verbose(CALL_INFO, 6, 0,
                     "Core %u ; Thread %d; Executing PC= 0x%" PRIx64 "\n",
                     id, HartToExec, ExecPC);
+    #endif
 
     // attempt to execute the instruction as long as it is NOT
     // the firmware jump PC
@@ -1848,12 +1853,7 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
       mem->SetTracer(tracer);
       RegFile->tracer = tracer;
     
-      #if 0
-      uint64_t DbgPC=0x101f0;
-      if (ExecPC==DbgPC) {
-        std::cout << "PC=0x" << std::hex << ExecPC << std::endl;
-      }
-      #endif
+
 
       // execute the instruction
       if( !Ext->Execute(EToE.second, Pipeline.back().second, HartToExec) ){
@@ -1869,7 +1869,7 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
       // Conditionally trace
       if (tracer) {
         // Render instruction summary after execution
-        tracer->CheckUserControls();
+        tracer->CheckUserControls(currentCycle);
         if (tracer->OutputEnabled()) {
           output->verbose(CALL_INFO, 5, 0,
                 "Core %d ; Thread %d]; *I %s\n", 
@@ -1991,6 +1991,7 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
     // wait until the counter has been decremented
     // note that this will continue to occur until the counter is drained
     // and the HART is halted
+    // TODO
     output->verbose(CALL_INFO, 9, 0,
                     "Core %u ; No available thread to exec PC= 0x%" PRIx64 "\n",
                     id, ExecPC);
@@ -2016,9 +2017,11 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
        (!*(Pipeline.front().second.hazard))){
       // Ready to retire this instruction
       uint16_t tID = Pipeline.front().first;
+      #ifdef NO_REV_TRACER
       output->verbose(CALL_INFO, 6, 0,
                       "Core %u ; ThreadID %d; Retiring PC= 0x%" PRIx64 "\n",
                       id, tID, ExecPC);
+      #endif
       Retired++;
       DependencyClear(tID, &(Pipeline.front().second));
       Pipeline.erase(Pipeline.begin());
@@ -2050,6 +2053,7 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
           break;
         case PanExec::QNull:
           // no work to do; spin on the firmware jump PC
+          // TODO
           output->verbose(CALL_INFO, 6, 0,
                       "Core %u ; No PAN work to do; Jumping to PC= 0x%" PRIx64 "\n",
                       id, ExecPC);

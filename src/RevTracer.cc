@@ -53,11 +53,21 @@ int SST::RevCPU::RevTracer::SetTraceSymbols(std::map<uint64_t, std::string> *Tra
     return 0;
 }
 
-void SST::RevCPU::RevTracer::CheckUserControls()
+void SST::RevCPU::RevTracer::CheckUserControls(uint64_t cycle)
 {
     if (insn == MAGIC_INST) {
         outputEnabled = !outputEnabled;
         events.f.trc_ctl = 1; 
+    }
+
+    if ( cycleOn and cycleOn==cycle ) {
+        outputEnabled = true;
+        events.f.trc_ctl = 1;
+    }
+
+    if ( cycleOff and cycleOff==cycle ) {
+        outputEnabled = false;
+        events.f.trc_ctl = 1;
     }
 }
 

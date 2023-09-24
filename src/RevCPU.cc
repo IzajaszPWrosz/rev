@@ -10,7 +10,6 @@
 
 #include "../include/RevCPU.h"
 #include <cmath>
-#include "../include/kg_globals.h"
 
 using namespace SST::RevCPU;
 
@@ -42,7 +41,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
     ClockHandler(nullptr) {
 
   const int Verbosity = params.find<int>("verbose", 0);
-  KG_GLOBAL::spinner(id);
+
   // Initialize the output handler
   output.init("RevCPU[" + getName() + ":@p:@t]: ", Verbosity, 0, SST::Output::STDOUT);
 
@@ -271,7 +270,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
       trc->SetDisassembler(diasmType);
       trc->SetTraceSymbols(Loader->GetTraceSymbols());
       trc->Reset();
-      trc->SetOutputEnable(true);
+      trc->InitOutputEnable();
       Procs[i]->SetTracer(trc);
     }
   }
@@ -370,7 +369,10 @@ RevCPU::~RevCPU(){
   delete Opts;
 
   // delete the clock handler object
-  delete ClockHandler;
+  #if 0
+    // Segfaulting with mpirun -n 1 sst --run-mode=init --output=out.dot test.py --dot-verbosity=10
+    delete ClockHandler;
+  #endif
 }
 
 void RevCPU::DecodeFaultWidth(const std::string& width){

@@ -87,7 +87,7 @@ namespace SST{
 
       int SetDisassembler(std::string machine);
       int SetTraceSymbols(std::map<uint64_t,std::string>* TraceSymbols);
-      void CheckUserControls();
+      void CheckUserControls(uint64_t cycle);
       void SetFetchedInsn(uint64_t _pc, uint32_t _insn);
       bool OutputEnabled();
 
@@ -104,7 +104,8 @@ namespace SST{
 
       // output at end of cycle with an executed instruction
       std::string RenderOneLiner();
-      void SetOutputEnable(bool e) {outputEnabled=e;}
+      void InitOutputEnable() { outputEnabled = initEn; }
+      void SetOutputEnable(bool e) { outputEnabled=e; }
       void Reset();
 
     private:
@@ -125,6 +126,11 @@ namespace SST{
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);
       void fmt_data(unsigned len, uint64_t data, std::stringstream& s);
+
+      // user settings
+      const bool initEn = false;
+      const uint64_t cycleOn  = 1594300ULL;
+      const uint64_t cycleOff = 1599300ULL;
 
     }; // class RevTracer
 
