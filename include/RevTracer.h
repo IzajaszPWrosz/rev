@@ -128,9 +128,9 @@ namespace SST{
       void fmt_data(unsigned len, uint64_t data, std::stringstream& s);
 
       // user settings
-      const bool initEn = false;
-      const uint64_t cycleOn  = 1594300ULL;
-      const uint64_t cycleOff = 1599300ULL;
+      const bool initEn = true;
+      const uint64_t cycleOn  = 0;
+      const uint64_t cycleOff = 0;
 
     }; // class RevTracer
 

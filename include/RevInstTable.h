@@ -207,7 +207,7 @@ struct RevRegFile {
       if (tracer) tracer->pcWrite(RV32_PC);
     }else{
       RV64_PC += bytes;
-      if (tracer) tracer->pcWrite(RV32_PC);
+      if (tracer) tracer->pcWrite(RV64_PC);
     }
   }
 

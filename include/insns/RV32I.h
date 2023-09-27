@@ -282,11 +282,13 @@ class RV32I : public RevExt {
   static bool jalr(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
     if( F->IsRV32() ){
       auto ret = R->RV32_PC + Inst.instSize;
-      R->RV32_PC = (R->GetX<uint32_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint32_t{1};
+      //R->RV32_PC = (R->GetX<uint32_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint32_t{1};
+      R->SetPC(F, (R->GetX<uint32_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint32_t{1});
       R->SetX(F, Inst.rd, ret);
     }else{
       auto ret = R->RV64_PC + Inst.instSize;
-      R->RV64_PC = (R->GetX<uint64_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint64_t{1};
+      //R->RV64_PC = (R->GetX<uint64_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint64_t{1};
+      R->SetPC(F, (R->GetX<uint64_t>(F, Inst.rs1) + Inst.ImmSignExt(12)) & ~uint64_t{1});
       R->SetX(F, Inst.rd, ret);
     }
     return true;
