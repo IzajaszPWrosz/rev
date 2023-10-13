@@ -21,7 +21,26 @@ using namespace SST::RevCPU;
 using namespace std;
 
 RevTracer::RevTracer(unsigned Verbosity, std::string Name)
-: name(Name), outputEnabled(true), insn(0), traceSymbols(nullptr) {}
+: name(Name), outputEnabled(false), insn(0), traceSymbols(nullptr),
+  lastPC(0), startCycle(0), cycleLimit(0), traceCycles(0), disabled(0) {
+    
+    enableQ.resize(MAX_ENABLE_Q);
+    enableQ.assign(MAX_ENABLE_Q,0);
+    enableQindex = 0;
+
+    #if 0
+    if (std::getenv("USE_SPINNER")){
+        uint64_t spinner = 1;
+        std::cout << "spinner active" << std::endl;
+        while (spinner){
+            spinner++;
+            if (spinner % 10000000 == 0) // break here
+                std::cout << ".";
+        }
+        std::cout << std::endl;
+    }
+#endif
+}
 
 SST::RevCPU::RevTracer::~RevTracer()
 {
@@ -53,21 +72,61 @@ int SST::RevCPU::RevTracer::SetTraceSymbols(std::map<uint64_t, std::string> *Tra
     return 0;
 }
 
+void SST::RevCPU::RevTracer::SetStartCycle(uint64_t c)
+{
+    startCycle = c;
+}
+
+void SST::RevCPU::RevTracer::SetCycleLimit(uint64_t c)
+{
+    cycleLimit = c;
+}
+
 void SST::RevCPU::RevTracer::CheckUserControls(uint64_t cycle)
 {
-    if (insn == MAGIC_INST) {
-        outputEnabled = !outputEnabled;
-        events.f.trc_ctl = 1; 
+    // bail out early if disabled
+    if (disabled) return;
+    if (cycleLimit and traceCycles>cycleLimit) {
+        disabled = true;
+        if (outputEnabled) {
+            outputEnabled = false;
+            events.f.trc_ctl = 1;
+        }
+        return;
+    }
+    
+    // Using a startCycle will override programmatic controls.
+    if (startCycle>0) {
+        bool enable = startCycle and cycle > startCycle;
+        if (enable != outputEnabled) {
+            outputEnabled = enable;
+            events.f.trc_ctl = 1;
+        }
+        return;
     }
 
-    if ( cycleOn and cycleOn==cycle ) {
-        outputEnabled = true;
-        events.f.trc_ctl = 1;
+    // programatic controls
+    bool nextState = outputEnabled;
+    if (insn == TRC_CONTROL_NOP::TRACE_OFF) {
+        nextState = false;
+    } else if (insn == TRC_CONTROL_NOP::TRACE_ON) {
+        nextState = true;
+    } else if (insn == TRC_CONTROL_NOP::TRACE_PUSH_OFF) {
+        enableQ[enableQindex] = outputEnabled;
+        enableQindex = (enableQindex + 1 ) % MAX_ENABLE_Q;
+        nextState = false;
+    } else if (insn == TRC_CONTROL_NOP::TRACE_PUSH_ON) {
+        enableQ[enableQindex] = outputEnabled;
+        enableQindex = (enableQindex + 1 ) % MAX_ENABLE_Q;
+        nextState = true;
+    } else if (insn == TRC_CONTROL_NOP::TRACE_POP) {
+        enableQindex = (enableQindex - 1 ) % MAX_ENABLE_Q;
+        nextState = enableQ[enableQindex];
     }
-
-    if ( cycleOff and cycleOff==cycle ) {
-        outputEnabled = false;
+    // prevent trace clutter with unnecessary events
+    if (nextState != outputEnabled) {
         events.f.trc_ctl = 1;
+        outputEnabled = nextState;
     }
 }
 
@@ -144,6 +203,9 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner()
     // register and memory read/write events preserving code ordering
     if (traceRecs.empty()) 
         return os.str();
+
+    // We got something, count it and render it
+    traceCycles++;
 
     std::stringstream ss_rw;
     for (TraceRec_t r : traceRecs) {

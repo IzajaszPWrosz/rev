@@ -260,7 +260,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
   }
 
   #ifndef NO_REV_TRACER
-  // Assign tracer to each core
+  // Configure tracer and assign to each core
   if (output.getVerboseLevel()>=5) {
     for( unsigned i=0; i<numCores; i++ ){
       // Each core gets its very own tracer
@@ -269,8 +269,12 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
       Opts->GetMachineModel(0,diasmType); 
       trc->SetDisassembler(diasmType);
       trc->SetTraceSymbols(Loader->GetTraceSymbols());
+
+      // tracer user controls - cycle on and off. Ignored unless > 0
+      trc->SetStartCycle(params.find<uint64_t>("trcStartCycle",0));
+      trc->SetCycleLimit(params.find<uint64_t>("trcLimit",0));
+
       trc->Reset();
-      trc->InitOutputEnable();
       Procs[i]->SetTracer(trc);
     }
   }
@@ -623,6 +627,7 @@ void RevCPU::PANHandleSuccess(panNicEvent *event){
     if( std::get<0>(*GetIter) == event->getTag() ){
       // found a valid entry; setup the memory write
       uint64_t *Data = new uint64_t [event->getNumBlocks(std::get<2>(*GetIter))];
+      event->getData(Data);
       Mem->WriteMem(0,
                     std::get<1>(*GetIter),
                     std::get<2>(*GetIter),

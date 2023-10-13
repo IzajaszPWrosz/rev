@@ -1,5 +1,5 @@
 /*
- * ex1.c
+ * tracer.c
  *
  * RISC-V ISA: RV32I
  *
@@ -12,43 +12,71 @@
  */
 
 #include <stdlib.h>
+#include "rev-macros.h"
 
-volatile int fail(int delay) {
-  // how do I fail a test?
-  // this will just create an obvious divergence in the trace
-  int k=delay;
-  int one=1;
-  asm volatile("_fail: sub %0,%1,%2\n\t"
-                       "bgtz %0, _fail"
-	       : "=r"(k) : "r"(k) , "r"(one));
-  return k*2;
+// inefficient calculation of r-s
+int long_sub(int r, int s) {
+  for (int i=0;i<s;i++)
+    r--;
+  return r;
 }
 
-volatile int check(int a) {
-  if (a!=42) return 1;
-  return 0;
+volatile int check_push_on(int x, int y) {
+  // turn tracing on without affecting caller tracing state
+  TRACE_PUSH_ON;
+  // calculate x^y
+  int rc = 1;
+  for (int i=0;i<y;i++)
+    rc *= x;
+  TRACE_POP;
+  return rc;
 }
-      
+
+volatile int check_push_off(int r, int s) {
+  // turn tracing on without affecting caller tracing state
+  TRACE_PUSH_OFF;
+  int rc = long_sub(r,s);
+  TRACE_POP;
+  return rc;
+}
+
 int main(int argc, char **argv){
-  int i = 9;
-  i = i + argc;
-  asm volatile("xor x0,x0,x0");  // trace off 0x4033
-  for (int j=0; j<1000;j++) {
-    i+=j;
-  }
-  asm volatile("xor x0,x0,x0");  // trace on  0x4033
+  // tracing is initially off
+  int res=3000;
+  res = long_sub(res,1000);
+  // res == 2000;
 
-  // specific assembly trace checks
-  asm volatile("lui %0, 0xaced1" : "=r" (i)); // load upper immediate
+  // enable tracing
+  TRACE_ON;
+  res = long_sub(res,20);
+  // res == 1980
+  assert(res==1980);
+  TRACE_OFF;
 
-  // load addres emits auipc (add upper immediate to PC) and a load
-  void* j = (void*) fail;
-  i = i + (unsigned long)j;
+  // not traced
+  for (int i=0;i<1980/2;i++)
+    res = res - 1;
 
-  if (check(42) != 0) {
-    i+= fail(100);
+  // assert macro enables tracing temporarily
+  assert(res*2==1980);
+
+  // another delay loop to prove tracing still off
+  res = long_sub(res,1980/2);
+  assert(res==0);
+  
+  // call subroutine that uses push/pop to enable/disable tracing
+  res = check_push_on(10,5);
+  assert(res==100000);
+
+  // call subroutine that will not be traced inside a traced loop.
+  // again, the assert will be traced
+  for (int r=10;r<20;r+=10) {
+    for (int s=-10;s<10;s+=10) {
+      int rc = check_push_off(r,s);
+      assert(rc=r-s);
+    }
   }
   
-  return i;
+  return 0;
 }
 

@@ -30,8 +30,14 @@
 namespace SST{
   namespace RevCPU{
 
-  const unsigned MAGIC_INST = 0x4033; // xor zero,zero,zero
-
+  enum TRC_CONTROL_NOP : uint32_t {
+    TRACE_OFF      = 0x00004013, // xori x0,x0,0
+    TRACE_ON       = 0x00104013, // xori x0,x0,1
+    TRACE_PUSH_OFF = 0x00204013, // xori x0,x0,2
+    TRACE_PUSH_ON  = 0x00304013, // xori x0,x0,3
+    TRACE_POP      = 0x00404013  // xori x0,x0,4
+  };
+  
   enum class EVENT_SYMBOL : unsigned {
     OK = 0x0,
     STALL = 0x1,
@@ -79,7 +85,6 @@ namespace SST{
       : key(Key), a(A), b(B), c(C) {};
   };
 
-  
   class RevTracer{
     public:
       RevTracer(unsigned Verbosity, std::string Name);
@@ -87,6 +92,8 @@ namespace SST{
 
       int SetDisassembler(std::string machine);
       int SetTraceSymbols(std::map<uint64_t,std::string>* TraceSymbols);
+      void SetStartCycle(uint64_t c);
+      void SetCycleLimit(uint64_t c);
       void CheckUserControls(uint64_t cycle);
       void SetFetchedInsn(uint64_t _pc, uint32_t _insn);
       bool OutputEnabled();
@@ -104,7 +111,6 @@ namespace SST{
 
       // output at end of cycle with an executed instruction
       std::string RenderOneLiner();
-      void InitOutputEnable() { outputEnabled = initEn; }
       void SetOutputEnable(bool e) { outputEnabled=e; }
       void Reset();
 
@@ -121,16 +127,22 @@ namespace SST{
       uint64_t pc;
       uint32_t insn;
       std::map<uint64_t,std::string>* traceSymbols;
-      uint64_t lastPC = 0;    // avoid displaying sequential addresses
+      uint64_t lastPC;    // avoid displaying sequential addresses
     
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);
       void fmt_data(unsigned len, uint64_t data, std::stringstream& s);
 
       // user settings
-      const bool initEn = true;
-      const uint64_t cycleOn  = 0;
-      const uint64_t cycleOff = 0;
+      uint64_t startCycle;
+      uint64_t cycleLimit;
+      std::vector<bool> enableQ;
+      // allow wrapping around for deep push/pop programming errors.
+      unsigned enableQindex;
+      const unsigned MAX_ENABLE_Q = 100;
+      // trace counter
+      uint64_t traceCycles;
+      bool disabled;
 
     }; // class RevTracer
 

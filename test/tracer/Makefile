@@ -13,16 +13,20 @@
 .PHONY: src
 
 EXAMPLE=tracer
-CC="${RVCC}"
+CC=${RVCC}
+OBJDUMP=${RISCV}/bin/riscv64-unknown-elf-objdump -D --source 
 
 ARCH=rv32i
 ABI=-mabi=ilp32
 //ARCH=rv64g
 
-all: $(EXAMPLE).exe
+all: $(EXAMPLE).exe $(EXAMPLE).dis
 $(EXAMPLE).exe: $(EXAMPLE).c
 	$(CC) -g -O0 -march=$(ARCH) $(ABI) -o  $(EXAMPLE).exe $(EXAMPLE).c
+$(EXAMPLE).dis: $(EXAMPLE).exe
+	$(OBJDUMP) $< > $@
+
 clean:
-	rm -Rf $(EXAMPLE).exe
+	rm -Rf $(EXAMPLE).exe $(EXAMPLE).dis
 
 #-- EOF
