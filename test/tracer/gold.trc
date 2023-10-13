@@ -3,7 +3,8 @@ rm -Rf tracer.exe tracer.dis
 /opt/homebrew/bin/riscv64-unknown-elf-objdump -D --source  tracer.exe > tracer.dis
 
 WARNING: Building component "cpu" with no links assigned.
-RevCPU[cpu:RevCPU:0]: Building Rev with 1 cores
+RevCPU[cpu:RevCPU:0]: Building Rev with 1 cores and 1 hart(s) on each core 
+RevCPU[cpu:InitThread:0]: Initializing Thread 1
 RevCPU[cpu:RevCPU:0]: 
 *******                   
 /**////**                  
@@ -15,6 +16,7 @@ RevCPU[cpu:RevCPU:0]:
 //     //  //////    //    
 
 RevCPU[cpu:RevCPU:0]: Initialization of RevCPUs complete.
+RevCPU[cpu:AssignThread:1000]: Assigning Thread 1 to Processor 0
 RevCPU[cpu:ClockTick:9032000]: Core 0 ; Thread 0]; *I 0x102d4:00104013  + xori    zero, zero, 1	 0x0<-zero zero<-0x0 pc<-0x102d8 
 RevCPU[cpu:ClockTick:9033000]: Core 0 ; Thread 0]; *I 0x102d8:01400593    li      a1, 20	 0x0<-zero a1<-0x14 
 RevCPU[cpu:ClockTick:9034000]: Core 0 ; Thread 0]; *I 0x102dc:fec42503    lw      a0, -20(s0)	 0x3ffffba0<-s0 0x000007d0<-[0x3ffffb8c,4] a0<-0x7d0 
@@ -444,10 +446,8 @@ RevCPU[cpu:ClockTick:27418000]: Core 0 ; Thread 0]; *I 0x103d8:0017b793    seqz 
 RevCPU[cpu:ClockTick:27419000]: Core 0 ; Thread 0]; *I 0x103dc:0ff7f793    andi    a5, a5, 255	 0x0<-a5 a5<-0x0 
 RevCPU[cpu:ClockTick:27420000]: Core 0 ; Thread 0]; *I 0x103e0:00078463    beqz    a5, pc + 8	 0x0<-a5 0x0<-zero pc<-0x103e8 <$x> 
 RevCPU[cpu:ClockTick:27421000]: Core 0 ; Thread 0]; *I 0x103e8:00204013  - xori    zero, zero, 2	 0x0<-zero zero<-0x0 
-RevCPU[cpu:ClockTick:27439000]: Thread 1024 completed execution.
-RevCPU[cpu:ClockTick:27439000]: Program execution complete
-RevCPU[cpu:ClockTick:27439000]: Program Stats: Total Cycles: 27439 Busy Cycles: 27428 Idle Cycles: 11 Eff: 0.999599
-RevCPU[cpu:ClockTick:27439000]: 	 Bytes Read: 45672 Bytes Written: 27779 Floats Read: 0 Doubles Read 0 Floats Exec: 0 TLB Hits: 17290 TLB Misses: 254 Inst Retired: 27428
-RevCPU[cpu:clockTick:27439000]: Closing Processor 0 at Cycle: 27439
+RevCPU[cpu:PrintStatSummary:27439000]: Program execution complete
+RevCPU[cpu:PrintStatSummary:27439000]: Program Stats: Total Cycles: 27439 Busy Cycles: 27428 Idle Cycles: 11 Eff: 0.999599
+RevCPU[cpu:PrintStatSummary:27439000]: 	 Bytes Read: 45672 Bytes Written: 27779 Floats Read: 0 Doubles Read 0 Floats Exec: 0 TLB Hits: 17290 TLB Misses: 254 Inst Retired: 27428
 RevCPU[cpu:clockTick:27439000]: OK to end sim at cycle: 27439
 Simulation is complete, simulated time: 27.439 us
