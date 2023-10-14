@@ -12,6 +12,7 @@
  */
 
 #include <stdlib.h>
+#include <cstdint>
 #include "rev-macros.h"
 
 // inefficient calculation of r-s
@@ -76,6 +77,21 @@ int main(int argc, char **argv){
       assert(rc=r-s);
     }
   }
+
+  // trace some memory operations with register dependencies
+  // in a tight loop
+  TRACE_ON;
+  volatile uint32_t load_data = 0x1ace4fee;
+  asm volatile("addi t3, zero, 5    \n\t"  // counter = 5
+	       "mem_loop:       \n\t"
+	       "lw   t4, 0(%0)  \n\t"
+	       "addi t3, t3, -1 \n\t"       // counter--
+	       "addi t4, t4, 1  \n\t"       // stall?
+	       "sw   t4, 0(%0)  \n\t"       // more traffic
+	       "bnez t3, mem_loop"          
+	       :  : "r"(&load_data) : "t3", "t4"
+	       );
+  TRACE_OFF;
   
   return 0;
 }

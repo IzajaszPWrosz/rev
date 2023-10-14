@@ -28,7 +28,7 @@ RevTracer::RevTracer(std::string Name, SST::Output *o)
     enableQ.assign(MAX_ENABLE_Q,0);
     enableQindex = 0;
 
-    #if 0
+    #if 1
     if (std::getenv("USE_SPINNER")){
         uint64_t spinner = 1;
         std::cout << "spinner active" << std::endl;

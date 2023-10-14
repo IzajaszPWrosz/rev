@@ -241,32 +241,32 @@ RevCPU[cpu:InstTrace:27109000]: Core 0 ; Thread 0]; *I 0x10234:fd842783    lw   
 RevCPU[cpu:InstTrace:27110000]: Core 0 ; Thread 0]; *I 0x10238:fcf74ce3    blt     a4, a5, pc - 40	 0x0<-a4 0x5<-a5 pc<-0x10210 
 RevCPU[cpu:InstTrace:27111000]: Core 0 ; Thread 0]; *I 0x10210:fdc42583    lw      a1, -36(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb3c,4] a1<-0xa 
 RevCPU[cpu:InstTrace:27112000]: Core 0 ; Thread 0]; *I 0x10214:fec42503    lw      a0, -20(s0)	 0x3ffffb60<-s0 0x00000001<-[0x3ffffb4c,4] a0<-0x1 
-RevCPU[cpu:InstTrace:27113000]: Core 0 ; Thread 0]; *I 0x10218:21c000ef    jal     pc + 0x21c	 ra<-0x1021c pc<-0x10434 <__mulsi3> 
-RevCPU[cpu:InstTrace:27115000]: Core 0 ; Thread 0]; *I 0x10434:00050613    mv      a2, a0	 0x1<-a0 a2<-0x1 
-RevCPU[cpu:InstTrace:27116000]: Core 0 ; Thread 0]; *I 0x10438:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
-RevCPU[cpu:InstTrace:27117000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27118000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27119000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
-RevCPU[cpu:InstTrace:27120000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x1<-a2 a2<-0x2 
-RevCPU[cpu:InstTrace:27121000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27122000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27123000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27124000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x0<-a0 0x2<-a2 a0<-0x2 
-RevCPU[cpu:InstTrace:27125000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
-RevCPU[cpu:InstTrace:27126000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x2<-a2 a2<-0x4 
-RevCPU[cpu:InstTrace:27127000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27128000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27129000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27130000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
-RevCPU[cpu:InstTrace:27131000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x4<-a2 a2<-0x8 
-RevCPU[cpu:InstTrace:27132000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27133000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27134000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27135000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x2<-a0 0x8<-a2 a0<-0xa 
-RevCPU[cpu:InstTrace:27136000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
-RevCPU[cpu:InstTrace:27137000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x8<-a2 a2<-0x10 
-RevCPU[cpu:InstTrace:27138000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
-RevCPU[cpu:InstTrace:27139000]: Core 0 ; Thread 0]; *I 0x10454:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
+RevCPU[cpu:InstTrace:27113000]: Core 0 ; Thread 0]; *I 0x10218:24c000ef    jal     pc + 0x24c	 ra<-0x1021c pc<-0x10464 <__mulsi3> 
+RevCPU[cpu:InstTrace:27115000]: Core 0 ; Thread 0]; *I 0x10464:00050613    mv      a2, a0	 0x1<-a0 a2<-0x1 
+RevCPU[cpu:InstTrace:27116000]: Core 0 ; Thread 0]; *I 0x10468:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
+RevCPU[cpu:InstTrace:27117000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27118000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27119000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
+RevCPU[cpu:InstTrace:27120000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x1<-a2 a2<-0x2 
+RevCPU[cpu:InstTrace:27121000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27122000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27123000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27124000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x0<-a0 0x2<-a2 a0<-0x2 
+RevCPU[cpu:InstTrace:27125000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
+RevCPU[cpu:InstTrace:27126000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x2<-a2 a2<-0x4 
+RevCPU[cpu:InstTrace:27127000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27128000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27129000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27130000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
+RevCPU[cpu:InstTrace:27131000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x4<-a2 a2<-0x8 
+RevCPU[cpu:InstTrace:27132000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27133000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27134000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27135000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x2<-a0 0x8<-a2 a0<-0xa 
+RevCPU[cpu:InstTrace:27136000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
+RevCPU[cpu:InstTrace:27137000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x8<-a2 a2<-0x10 
+RevCPU[cpu:InstTrace:27138000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
+RevCPU[cpu:InstTrace:27139000]: Core 0 ; Thread 0]; *I 0x10484:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
 RevCPU[cpu:InstTrace:27140000]: Core 0 ; Thread 0]; *I 0x1021c:00050793    mv      a5, a0	 0xa<-a0 a5<-0xa 
 RevCPU[cpu:InstTrace:27141000]: Core 0 ; Thread 0]; *I 0x10220:fef42623    sw      a5, -20(s0)	 0x3ffffb60<-s0 0xa<-a5 [0x3ffffb4c,4]<-0x0000000a 
 RevCPU[cpu:InstTrace:27142000]: Core 0 ; Thread 0]; *I 0x10224:fe842783    lw      a5, -24(s0)	 0x3ffffb60<-s0 0x00000000<-[0x3ffffb48,4] a5<-0x0 
@@ -277,32 +277,32 @@ RevCPU[cpu:InstTrace:27146000]: Core 0 ; Thread 0]; *I 0x10234:fd842783    lw   
 RevCPU[cpu:InstTrace:27147000]: Core 0 ; Thread 0]; *I 0x10238:fcf74ce3    blt     a4, a5, pc - 40	 0x1<-a4 0x5<-a5 pc<-0x10210 
 RevCPU[cpu:InstTrace:27148000]: Core 0 ; Thread 0]; *I 0x10210:fdc42583    lw      a1, -36(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb3c,4] a1<-0xa 
 RevCPU[cpu:InstTrace:27149000]: Core 0 ; Thread 0]; *I 0x10214:fec42503    lw      a0, -20(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb4c,4] a0<-0xa 
-RevCPU[cpu:InstTrace:27150000]: Core 0 ; Thread 0]; *I 0x10218:21c000ef    jal     pc + 0x21c	 ra<-0x1021c pc<-0x10434 <__mulsi3> 
-RevCPU[cpu:InstTrace:27151000]: Core 0 ; Thread 0]; *I 0x10434:00050613    mv      a2, a0	 0xa<-a0 a2<-0xa 
-RevCPU[cpu:InstTrace:27152000]: Core 0 ; Thread 0]; *I 0x10438:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
-RevCPU[cpu:InstTrace:27153000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27154000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27155000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
-RevCPU[cpu:InstTrace:27156000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0xa<-a2 a2<-0x14 
-RevCPU[cpu:InstTrace:27157000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27158000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27159000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27160000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x0<-a0 0x14<-a2 a0<-0x14 
-RevCPU[cpu:InstTrace:27161000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
-RevCPU[cpu:InstTrace:27162000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x14<-a2 a2<-0x28 
-RevCPU[cpu:InstTrace:27163000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27164000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27165000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27166000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
-RevCPU[cpu:InstTrace:27167000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x28<-a2 a2<-0x50 
-RevCPU[cpu:InstTrace:27168000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27169000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27170000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27171000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x14<-a0 0x50<-a2 a0<-0x64 
-RevCPU[cpu:InstTrace:27172000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
-RevCPU[cpu:InstTrace:27173000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x50<-a2 a2<-0xa0 
-RevCPU[cpu:InstTrace:27174000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
-RevCPU[cpu:InstTrace:27175000]: Core 0 ; Thread 0]; *I 0x10454:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
+RevCPU[cpu:InstTrace:27150000]: Core 0 ; Thread 0]; *I 0x10218:24c000ef    jal     pc + 0x24c	 ra<-0x1021c pc<-0x10464 <__mulsi3> 
+RevCPU[cpu:InstTrace:27151000]: Core 0 ; Thread 0]; *I 0x10464:00050613    mv      a2, a0	 0xa<-a0 a2<-0xa 
+RevCPU[cpu:InstTrace:27152000]: Core 0 ; Thread 0]; *I 0x10468:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
+RevCPU[cpu:InstTrace:27153000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27154000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27155000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
+RevCPU[cpu:InstTrace:27156000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0xa<-a2 a2<-0x14 
+RevCPU[cpu:InstTrace:27157000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27158000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27159000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27160000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x0<-a0 0x14<-a2 a0<-0x14 
+RevCPU[cpu:InstTrace:27161000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
+RevCPU[cpu:InstTrace:27162000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x14<-a2 a2<-0x28 
+RevCPU[cpu:InstTrace:27163000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27164000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27165000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27166000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
+RevCPU[cpu:InstTrace:27167000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x28<-a2 a2<-0x50 
+RevCPU[cpu:InstTrace:27168000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27169000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27170000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27171000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x14<-a0 0x50<-a2 a0<-0x64 
+RevCPU[cpu:InstTrace:27172000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
+RevCPU[cpu:InstTrace:27173000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x50<-a2 a2<-0xa0 
+RevCPU[cpu:InstTrace:27174000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
+RevCPU[cpu:InstTrace:27175000]: Core 0 ; Thread 0]; *I 0x10484:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
 RevCPU[cpu:InstTrace:27176000]: Core 0 ; Thread 0]; *I 0x1021c:00050793    mv      a5, a0	 0x64<-a0 a5<-0x64 
 RevCPU[cpu:InstTrace:27177000]: Core 0 ; Thread 0]; *I 0x10220:fef42623    sw      a5, -20(s0)	 0x3ffffb60<-s0 0x64<-a5 [0x3ffffb4c,4]<-0x00000064 
 RevCPU[cpu:InstTrace:27178000]: Core 0 ; Thread 0]; *I 0x10224:fe842783    lw      a5, -24(s0)	 0x3ffffb60<-s0 0x00000001<-[0x3ffffb48,4] a5<-0x1 
@@ -313,32 +313,32 @@ RevCPU[cpu:InstTrace:27182000]: Core 0 ; Thread 0]; *I 0x10234:fd842783    lw   
 RevCPU[cpu:InstTrace:27183000]: Core 0 ; Thread 0]; *I 0x10238:fcf74ce3    blt     a4, a5, pc - 40	 0x2<-a4 0x5<-a5 pc<-0x10210 
 RevCPU[cpu:InstTrace:27184000]: Core 0 ; Thread 0]; *I 0x10210:fdc42583    lw      a1, -36(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb3c,4] a1<-0xa 
 RevCPU[cpu:InstTrace:27185000]: Core 0 ; Thread 0]; *I 0x10214:fec42503    lw      a0, -20(s0)	 0x3ffffb60<-s0 0x00000064<-[0x3ffffb4c,4] a0<-0x64 
-RevCPU[cpu:InstTrace:27186000]: Core 0 ; Thread 0]; *I 0x10218:21c000ef    jal     pc + 0x21c	 ra<-0x1021c pc<-0x10434 <__mulsi3> 
-RevCPU[cpu:InstTrace:27187000]: Core 0 ; Thread 0]; *I 0x10434:00050613    mv      a2, a0	 0x64<-a0 a2<-0x64 
-RevCPU[cpu:InstTrace:27188000]: Core 0 ; Thread 0]; *I 0x10438:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
-RevCPU[cpu:InstTrace:27189000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27190000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27191000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
-RevCPU[cpu:InstTrace:27192000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x64<-a2 a2<-0xc8 
-RevCPU[cpu:InstTrace:27193000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27194000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27195000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27196000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x0<-a0 0xc8<-a2 a0<-0xc8 
-RevCPU[cpu:InstTrace:27197000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
-RevCPU[cpu:InstTrace:27198000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0xc8<-a2 a2<-0x190 
-RevCPU[cpu:InstTrace:27199000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27200000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27201000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27202000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
-RevCPU[cpu:InstTrace:27203000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x190<-a2 a2<-0x320 
-RevCPU[cpu:InstTrace:27204000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27205000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27206000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27207000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0xc8<-a0 0x320<-a2 a0<-0x3e8 
-RevCPU[cpu:InstTrace:27208000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
-RevCPU[cpu:InstTrace:27209000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x320<-a2 a2<-0x640 
-RevCPU[cpu:InstTrace:27210000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
-RevCPU[cpu:InstTrace:27211000]: Core 0 ; Thread 0]; *I 0x10454:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
+RevCPU[cpu:InstTrace:27186000]: Core 0 ; Thread 0]; *I 0x10218:24c000ef    jal     pc + 0x24c	 ra<-0x1021c pc<-0x10464 <__mulsi3> 
+RevCPU[cpu:InstTrace:27187000]: Core 0 ; Thread 0]; *I 0x10464:00050613    mv      a2, a0	 0x64<-a0 a2<-0x64 
+RevCPU[cpu:InstTrace:27188000]: Core 0 ; Thread 0]; *I 0x10468:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
+RevCPU[cpu:InstTrace:27189000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27190000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27191000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
+RevCPU[cpu:InstTrace:27192000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x64<-a2 a2<-0xc8 
+RevCPU[cpu:InstTrace:27193000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27194000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27195000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27196000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x0<-a0 0xc8<-a2 a0<-0xc8 
+RevCPU[cpu:InstTrace:27197000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
+RevCPU[cpu:InstTrace:27198000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0xc8<-a2 a2<-0x190 
+RevCPU[cpu:InstTrace:27199000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27200000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27201000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27202000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
+RevCPU[cpu:InstTrace:27203000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x190<-a2 a2<-0x320 
+RevCPU[cpu:InstTrace:27204000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27205000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27206000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27207000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0xc8<-a0 0x320<-a2 a0<-0x3e8 
+RevCPU[cpu:InstTrace:27208000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
+RevCPU[cpu:InstTrace:27209000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x320<-a2 a2<-0x640 
+RevCPU[cpu:InstTrace:27210000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
+RevCPU[cpu:InstTrace:27211000]: Core 0 ; Thread 0]; *I 0x10484:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
 RevCPU[cpu:InstTrace:27212000]: Core 0 ; Thread 0]; *I 0x1021c:00050793    mv      a5, a0	 0x3e8<-a0 a5<-0x3e8 
 RevCPU[cpu:InstTrace:27213000]: Core 0 ; Thread 0]; *I 0x10220:fef42623    sw      a5, -20(s0)	 0x3ffffb60<-s0 0x3e8<-a5 [0x3ffffb4c,4]<-0x000003e8 
 RevCPU[cpu:InstTrace:27214000]: Core 0 ; Thread 0]; *I 0x10224:fe842783    lw      a5, -24(s0)	 0x3ffffb60<-s0 0x00000002<-[0x3ffffb48,4] a5<-0x2 
@@ -349,32 +349,32 @@ RevCPU[cpu:InstTrace:27218000]: Core 0 ; Thread 0]; *I 0x10234:fd842783    lw   
 RevCPU[cpu:InstTrace:27219000]: Core 0 ; Thread 0]; *I 0x10238:fcf74ce3    blt     a4, a5, pc - 40	 0x3<-a4 0x5<-a5 pc<-0x10210 
 RevCPU[cpu:InstTrace:27220000]: Core 0 ; Thread 0]; *I 0x10210:fdc42583    lw      a1, -36(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb3c,4] a1<-0xa 
 RevCPU[cpu:InstTrace:27221000]: Core 0 ; Thread 0]; *I 0x10214:fec42503    lw      a0, -20(s0)	 0x3ffffb60<-s0 0x000003e8<-[0x3ffffb4c,4] a0<-0x3e8 
-RevCPU[cpu:InstTrace:27222000]: Core 0 ; Thread 0]; *I 0x10218:21c000ef    jal     pc + 0x21c	 ra<-0x1021c pc<-0x10434 <__mulsi3> 
-RevCPU[cpu:InstTrace:27223000]: Core 0 ; Thread 0]; *I 0x10434:00050613    mv      a2, a0	 0x3e8<-a0 a2<-0x3e8 
-RevCPU[cpu:InstTrace:27224000]: Core 0 ; Thread 0]; *I 0x10438:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
-RevCPU[cpu:InstTrace:27225000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27226000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27227000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
-RevCPU[cpu:InstTrace:27228000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x3e8<-a2 a2<-0x7d0 
-RevCPU[cpu:InstTrace:27229000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27230000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27231000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27232000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x0<-a0 0x7d0<-a2 a0<-0x7d0 
-RevCPU[cpu:InstTrace:27233000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
-RevCPU[cpu:InstTrace:27234000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x7d0<-a2 a2<-0xfa0 
-RevCPU[cpu:InstTrace:27235000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27236000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27237000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27238000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
-RevCPU[cpu:InstTrace:27239000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0xfa0<-a2 a2<-0x1f40 
-RevCPU[cpu:InstTrace:27240000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27241000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27242000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27243000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x7d0<-a0 0x1f40<-a2 a0<-0x2710 
-RevCPU[cpu:InstTrace:27244000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
-RevCPU[cpu:InstTrace:27245000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x1f40<-a2 a2<-0x3e80 
-RevCPU[cpu:InstTrace:27246000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
-RevCPU[cpu:InstTrace:27247000]: Core 0 ; Thread 0]; *I 0x10454:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
+RevCPU[cpu:InstTrace:27222000]: Core 0 ; Thread 0]; *I 0x10218:24c000ef    jal     pc + 0x24c	 ra<-0x1021c pc<-0x10464 <__mulsi3> 
+RevCPU[cpu:InstTrace:27223000]: Core 0 ; Thread 0]; *I 0x10464:00050613    mv      a2, a0	 0x3e8<-a0 a2<-0x3e8 
+RevCPU[cpu:InstTrace:27224000]: Core 0 ; Thread 0]; *I 0x10468:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
+RevCPU[cpu:InstTrace:27225000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27226000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27227000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
+RevCPU[cpu:InstTrace:27228000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x3e8<-a2 a2<-0x7d0 
+RevCPU[cpu:InstTrace:27229000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27230000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27231000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27232000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x0<-a0 0x7d0<-a2 a0<-0x7d0 
+RevCPU[cpu:InstTrace:27233000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
+RevCPU[cpu:InstTrace:27234000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x7d0<-a2 a2<-0xfa0 
+RevCPU[cpu:InstTrace:27235000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27236000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27237000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27238000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
+RevCPU[cpu:InstTrace:27239000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0xfa0<-a2 a2<-0x1f40 
+RevCPU[cpu:InstTrace:27240000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27241000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27242000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27243000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x7d0<-a0 0x1f40<-a2 a0<-0x2710 
+RevCPU[cpu:InstTrace:27244000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
+RevCPU[cpu:InstTrace:27245000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x1f40<-a2 a2<-0x3e80 
+RevCPU[cpu:InstTrace:27246000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
+RevCPU[cpu:InstTrace:27247000]: Core 0 ; Thread 0]; *I 0x10484:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
 RevCPU[cpu:InstTrace:27248000]: Core 0 ; Thread 0]; *I 0x1021c:00050793    mv      a5, a0	 0x2710<-a0 a5<-0x2710 
 RevCPU[cpu:InstTrace:27249000]: Core 0 ; Thread 0]; *I 0x10220:fef42623    sw      a5, -20(s0)	 0x3ffffb60<-s0 0x2710<-a5 [0x3ffffb4c,4]<-0x00002710 
 RevCPU[cpu:InstTrace:27250000]: Core 0 ; Thread 0]; *I 0x10224:fe842783    lw      a5, -24(s0)	 0x3ffffb60<-s0 0x00000003<-[0x3ffffb48,4] a5<-0x3 
@@ -385,32 +385,32 @@ RevCPU[cpu:InstTrace:27254000]: Core 0 ; Thread 0]; *I 0x10234:fd842783    lw   
 RevCPU[cpu:InstTrace:27255000]: Core 0 ; Thread 0]; *I 0x10238:fcf74ce3    blt     a4, a5, pc - 40	 0x4<-a4 0x5<-a5 pc<-0x10210 
 RevCPU[cpu:InstTrace:27256000]: Core 0 ; Thread 0]; *I 0x10210:fdc42583    lw      a1, -36(s0)	 0x3ffffb60<-s0 0x0000000a<-[0x3ffffb3c,4] a1<-0xa 
 RevCPU[cpu:InstTrace:27257000]: Core 0 ; Thread 0]; *I 0x10214:fec42503    lw      a0, -20(s0)	 0x3ffffb60<-s0 0x00002710<-[0x3ffffb4c,4] a0<-0x2710 
-RevCPU[cpu:InstTrace:27258000]: Core 0 ; Thread 0]; *I 0x10218:21c000ef    jal     pc + 0x21c	 ra<-0x1021c pc<-0x10434 <__mulsi3> 
-RevCPU[cpu:InstTrace:27259000]: Core 0 ; Thread 0]; *I 0x10434:00050613    mv      a2, a0	 0x2710<-a0 a2<-0x2710 
-RevCPU[cpu:InstTrace:27260000]: Core 0 ; Thread 0]; *I 0x10438:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
-RevCPU[cpu:InstTrace:27261000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27262000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27263000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
-RevCPU[cpu:InstTrace:27264000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x2710<-a2 a2<-0x4e20 
-RevCPU[cpu:InstTrace:27265000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27266000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27267000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27268000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x0<-a0 0x4e20<-a2 a0<-0x4e20 
-RevCPU[cpu:InstTrace:27269000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
-RevCPU[cpu:InstTrace:27270000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x4e20<-a2 a2<-0x9c40 
-RevCPU[cpu:InstTrace:27271000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27272000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
-RevCPU[cpu:InstTrace:27273000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10448 
-RevCPU[cpu:InstTrace:27274000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
-RevCPU[cpu:InstTrace:27275000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x9c40<-a2 a2<-0x13880 
-RevCPU[cpu:InstTrace:27276000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1043c 
-RevCPU[cpu:InstTrace:27277000]: Core 0 ; Thread 0]; *I 0x1043c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
-RevCPU[cpu:InstTrace:27278000]: Core 0 ; Thread 0]; *I 0x10440:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
-RevCPU[cpu:InstTrace:27279000]: Core 0 ; Thread 0]; *I 0x10444:00c50533    add     a0, a0, a2	 0x4e20<-a0 0x13880<-a2 a0<-0x186a0 
-RevCPU[cpu:InstTrace:27280000]: Core 0 ; Thread 0]; *I 0x10448:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
-RevCPU[cpu:InstTrace:27281000]: Core 0 ; Thread 0]; *I 0x1044c:00161613    slli    a2, a2, 1	 0x13880<-a2 a2<-0x27100 
-RevCPU[cpu:InstTrace:27282000]: Core 0 ; Thread 0]; *I 0x10450:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
-RevCPU[cpu:InstTrace:27283000]: Core 0 ; Thread 0]; *I 0x10454:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
+RevCPU[cpu:InstTrace:27258000]: Core 0 ; Thread 0]; *I 0x10218:24c000ef    jal     pc + 0x24c	 ra<-0x1021c pc<-0x10464 <__mulsi3> 
+RevCPU[cpu:InstTrace:27259000]: Core 0 ; Thread 0]; *I 0x10464:00050613    mv      a2, a0	 0x2710<-a0 a2<-0x2710 
+RevCPU[cpu:InstTrace:27260000]: Core 0 ; Thread 0]; *I 0x10468:00000513    li      a0, 0	 0x0<-zero a0<-0x0 
+RevCPU[cpu:InstTrace:27261000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0xa<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27262000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27263000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0xa<-a1 a1<-0x5 
+RevCPU[cpu:InstTrace:27264000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x2710<-a2 a2<-0x4e20 
+RevCPU[cpu:InstTrace:27265000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x5<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27266000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x5<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27267000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27268000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x0<-a0 0x4e20<-a2 a0<-0x4e20 
+RevCPU[cpu:InstTrace:27269000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x5<-a1 a1<-0x2 
+RevCPU[cpu:InstTrace:27270000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x4e20<-a2 a2<-0x9c40 
+RevCPU[cpu:InstTrace:27271000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x2<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27272000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x2<-a1 a3<-0x0 
+RevCPU[cpu:InstTrace:27273000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x0<-a3 0x0<-zero pc<-0x10478 
+RevCPU[cpu:InstTrace:27274000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x2<-a1 a1<-0x1 
+RevCPU[cpu:InstTrace:27275000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x9c40<-a2 a2<-0x13880 
+RevCPU[cpu:InstTrace:27276000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x1<-a1 0x0<-zero pc<-0x1046c 
+RevCPU[cpu:InstTrace:27277000]: Core 0 ; Thread 0]; *I 0x1046c:0015f693    andi    a3, a1, 1	 0x1<-a1 a3<-0x1 
+RevCPU[cpu:InstTrace:27278000]: Core 0 ; Thread 0]; *I 0x10470:00068463    beqz    a3, pc + 8	 0x1<-a3 0x0<-zero 
+RevCPU[cpu:InstTrace:27279000]: Core 0 ; Thread 0]; *I 0x10474:00c50533    add     a0, a0, a2	 0x4e20<-a0 0x13880<-a2 a0<-0x186a0 
+RevCPU[cpu:InstTrace:27280000]: Core 0 ; Thread 0]; *I 0x10478:0015d593    srli    a1, a1, 1	 0x1<-a1 a1<-0x0 
+RevCPU[cpu:InstTrace:27281000]: Core 0 ; Thread 0]; *I 0x1047c:00161613    slli    a2, a2, 1	 0x13880<-a2 a2<-0x27100 
+RevCPU[cpu:InstTrace:27282000]: Core 0 ; Thread 0]; *I 0x10480:fe0596e3    bnez    a1, pc - 20	 0x0<-a1 0x0<-zero 
+RevCPU[cpu:InstTrace:27283000]: Core 0 ; Thread 0]; *I 0x10484:00008067    ret	 0x1021c<-ra pc<-0x1021c zero<-0x0 
 RevCPU[cpu:InstTrace:27284000]: Core 0 ; Thread 0]; *I 0x1021c:00050793    mv      a5, a0	 0x186a0<-a0 a5<-0x186a0 
 RevCPU[cpu:InstTrace:27285000]: Core 0 ; Thread 0]; *I 0x10220:fef42623    sw      a5, -20(s0)	 0x3ffffb60<-s0 0x186a0<-a5 [0x3ffffb4c,4]<-0x000186a0 
 RevCPU[cpu:InstTrace:27286000]: Core 0 ; Thread 0]; *I 0x10224:fe842783    lw      a5, -24(s0)	 0x3ffffb60<-s0 0x00000004<-[0x3ffffb48,4] a5<-0x4 
@@ -446,8 +446,40 @@ RevCPU[cpu:InstTrace:27418000]: Core 0 ; Thread 0]; *I 0x103d8:0017b793    seqz 
 RevCPU[cpu:InstTrace:27419000]: Core 0 ; Thread 0]; *I 0x103dc:0ff7f793    andi    a5, a5, 255	 0x0<-a5 a5<-0x0 
 RevCPU[cpu:InstTrace:27420000]: Core 0 ; Thread 0]; *I 0x103e0:00078463    beqz    a5, pc + 8	 0x0<-a5 0x0<-zero pc<-0x103e8 <$x> 
 RevCPU[cpu:InstTrace:27421000]: Core 0 ; Thread 0]; *I 0x103e8:00204013  - xori    zero, zero, 2	 0x0<-zero zero<-0x0 
-RevCPU[cpu:PrintStatSummary:27439000]: Program execution complete
-RevCPU[cpu:PrintStatSummary:27439000]: Program Stats: Total Cycles: 27439 Busy Cycles: 27428 Idle Cycles: 11 Eff: 0.999599
-RevCPU[cpu:PrintStatSummary:27439000]: 	 Bytes Read: 45672 Bytes Written: 27779 Floats Read: 0 Doubles Read 0 Floats Exec: 0 TLB Hits: 17290 TLB Misses: 254 Inst Retired: 27428
-RevCPU[cpu:clockTick:27439000]: OK to end sim at cycle: 27439
-Simulation is complete, simulated time: 27.439 us
+RevCPU[cpu:InstTrace:27434000]: Core 0 ; Thread 0]; *I 0x1041c:00104013  + xori    zero, zero, 1	 0x0<-zero zero<-0x0 pc<-0x10420 
+RevCPU[cpu:InstTrace:27435000]: Core 0 ; Thread 0]; *I 0x10420:1ace57b7    lui     a5, 0x1ace5	 a5<-0x1ace5000 
+RevCPU[cpu:InstTrace:27436000]: Core 0 ; Thread 0]; *I 0x10424:fee78793    addi    a5, a5, -18	 0x1ace5000<-a5 a5<-0x1ace4fee 
+RevCPU[cpu:InstTrace:27437000]: Core 0 ; Thread 0]; *I 0x10428:fcf42c23    sw      a5, -40(s0)	 0x3ffffba0<-s0 0x1ace4fee<-a5 [0x3ffffb78,4]<-0x1ace4fee 
+RevCPU[cpu:InstTrace:27438000]: Core 0 ; Thread 0]; *I 0x1042c:fd840793    addi    a5, s0, -40	 0x3ffffba0<-s0 a5<-0x3ffffb78 
+RevCPU[cpu:InstTrace:27439000]: Core 0 ; Thread 0]; *I 0x10430:00500e13    li      t3, 5	 0x0<-zero t3<-0x5 
+RevCPU[cpu:InstTrace:27440000]: Core 0 ; Thread 0]; *I 0x10434:0007ae83    lw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4fee<-[0x3ffffb78,4] t4<-0x1ace4fee 
+RevCPU[cpu:InstTrace:27441000]: Core 0 ; Thread 0]; *I 0x10438:fffe0e13    addi    t3, t3, -1	 0x5<-t3 t3<-0x4 
+RevCPU[cpu:InstTrace:27442000]: Core 0 ; Thread 0]; *I 0x1043c:001e8e93    addi    t4, t4, 1	 0x1ace4fee<-t4 t4<-0x1ace4fef 
+RevCPU[cpu:InstTrace:27443000]: Core 0 ; Thread 0]; *I 0x10440:01d7a023    sw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4fef<-t4 [0x3ffffb78,4]<-0x1ace4fef 
+RevCPU[cpu:InstTrace:27444000]: Core 0 ; Thread 0]; *I 0x10444:fe0e18e3    bnez    t3, pc - 16	 0x4<-t3 0x0<-zero pc<-0x10434 <mem_loop> 
+RevCPU[cpu:InstTrace:27445000]: Core 0 ; Thread 0]; *I 0x10434:0007ae83    lw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4fef<-[0x3ffffb78,4] t4<-0x1ace4fef 
+RevCPU[cpu:InstTrace:27446000]: Core 0 ; Thread 0]; *I 0x10438:fffe0e13    addi    t3, t3, -1	 0x4<-t3 t3<-0x3 
+RevCPU[cpu:InstTrace:27447000]: Core 0 ; Thread 0]; *I 0x1043c:001e8e93    addi    t4, t4, 1	 0x1ace4fef<-t4 t4<-0x1ace4ff0 
+RevCPU[cpu:InstTrace:27448000]: Core 0 ; Thread 0]; *I 0x10440:01d7a023    sw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff0<-t4 [0x3ffffb78,4]<-0x1ace4ff0 
+RevCPU[cpu:InstTrace:27449000]: Core 0 ; Thread 0]; *I 0x10444:fe0e18e3    bnez    t3, pc - 16	 0x3<-t3 0x0<-zero pc<-0x10434 <mem_loop> 
+RevCPU[cpu:InstTrace:27450000]: Core 0 ; Thread 0]; *I 0x10434:0007ae83    lw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff0<-[0x3ffffb78,4] t4<-0x1ace4ff0 
+RevCPU[cpu:InstTrace:27451000]: Core 0 ; Thread 0]; *I 0x10438:fffe0e13    addi    t3, t3, -1	 0x3<-t3 t3<-0x2 
+RevCPU[cpu:InstTrace:27452000]: Core 0 ; Thread 0]; *I 0x1043c:001e8e93    addi    t4, t4, 1	 0x1ace4ff0<-t4 t4<-0x1ace4ff1 
+RevCPU[cpu:InstTrace:27453000]: Core 0 ; Thread 0]; *I 0x10440:01d7a023    sw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff1<-t4 [0x3ffffb78,4]<-0x1ace4ff1 
+RevCPU[cpu:InstTrace:27454000]: Core 0 ; Thread 0]; *I 0x10444:fe0e18e3    bnez    t3, pc - 16	 0x2<-t3 0x0<-zero pc<-0x10434 <mem_loop> 
+RevCPU[cpu:InstTrace:27455000]: Core 0 ; Thread 0]; *I 0x10434:0007ae83    lw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff1<-[0x3ffffb78,4] t4<-0x1ace4ff1 
+RevCPU[cpu:InstTrace:27456000]: Core 0 ; Thread 0]; *I 0x10438:fffe0e13    addi    t3, t3, -1	 0x2<-t3 t3<-0x1 
+RevCPU[cpu:InstTrace:27457000]: Core 0 ; Thread 0]; *I 0x1043c:001e8e93    addi    t4, t4, 1	 0x1ace4ff1<-t4 t4<-0x1ace4ff2 
+RevCPU[cpu:InstTrace:27458000]: Core 0 ; Thread 0]; *I 0x10440:01d7a023    sw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff2<-t4 [0x3ffffb78,4]<-0x1ace4ff2 
+RevCPU[cpu:InstTrace:27459000]: Core 0 ; Thread 0]; *I 0x10444:fe0e18e3    bnez    t3, pc - 16	 0x1<-t3 0x0<-zero pc<-0x10434 <mem_loop> 
+RevCPU[cpu:InstTrace:27460000]: Core 0 ; Thread 0]; *I 0x10434:0007ae83    lw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff2<-[0x3ffffb78,4] t4<-0x1ace4ff2 
+RevCPU[cpu:InstTrace:27461000]: Core 0 ; Thread 0]; *I 0x10438:fffe0e13    addi    t3, t3, -1	 0x1<-t3 t3<-0x0 
+RevCPU[cpu:InstTrace:27462000]: Core 0 ; Thread 0]; *I 0x1043c:001e8e93    addi    t4, t4, 1	 0x1ace4ff2<-t4 t4<-0x1ace4ff3 
+RevCPU[cpu:InstTrace:27463000]: Core 0 ; Thread 0]; *I 0x10440:01d7a023    sw      t4, 0(a5)	 0x3ffffb78<-a5 0x1ace4ff3<-t4 [0x3ffffb78,4]<-0x1ace4ff3 
+RevCPU[cpu:InstTrace:27464000]: Core 0 ; Thread 0]; *I 0x10444:fe0e18e3    bnez    t3, pc - 16	 0x0<-t3 0x0<-zero 
+RevCPU[cpu:InstTrace:27465000]: Core 0 ; Thread 0]; *I 0x10448:00004013  - xori    zero, zero, 0	 0x0<-zero zero<-0x0 
+RevCPU[cpu:PrintStatSummary:27471000]: Program execution complete
+RevCPU[cpu:PrintStatSummary:27471000]: Program Stats: Total Cycles: 27471 Busy Cycles: 27460 Idle Cycles: 11 Eff: 0.999600
+RevCPU[cpu:PrintStatSummary:27471000]: 	 Bytes Read: 45756 Bytes Written: 27851 Floats Read: 0 Doubles Read 0 Floats Exec: 0 TLB Hits: 17305 TLB Misses: 267 Inst Retired: 27460
+RevCPU[cpu:clockTick:27471000]: OK to end sim at cycle: 27471
+Simulation is complete, simulated time: 27.471 us
