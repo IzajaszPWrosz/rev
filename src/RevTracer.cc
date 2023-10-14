@@ -20,8 +20,8 @@
 using namespace SST::RevCPU;
 using namespace std;
 
-RevTracer::RevTracer(unsigned Verbosity, std::string Name)
-: name(Name), outputEnabled(false), insn(0), traceSymbols(nullptr),
+RevTracer::RevTracer(std::string Name, SST::Output *o)
+: name(Name), pOutput(o), outputEnabled(false), insn(0), traceSymbols(nullptr),
   lastPC(0), startCycle(0), cycleLimit(0), traceCycles(0), disabled(0) {
     
     enableQ.resize(MAX_ENABLE_Q);
@@ -54,7 +54,7 @@ int SST::RevCPU::RevTracer::SetDisassembler(std::string machine)
 {
     #ifndef NO_REV_TRACER
     try {
-        // TODO what are options for privelege level (eg. MSU)
+        // TODO privelege level options
         isaParser = new isa_parser_t(machine.c_str(),"MSU");
         diasm = new disassembler_t(isaParser);
     } catch (...) {
@@ -173,6 +173,17 @@ void SST::RevCPU::RevTracer::memRead(uint64_t adr, unsigned len, void *data)
 void SST::RevCPU::RevTracer::pcWrite(uint64_t newpc)
 {
     traceRecs.emplace_back(TraceRec_t(PcWrite,newpc,0,0));
+}
+
+void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart)
+{
+    CheckUserControls(cycle);
+    if (OutputEnabled()){
+        pOutput->verbose(CALL_INFO, 5, 0,
+                         "Core %d ; Thread %d]; *I %s\n",
+                         id, hart, RenderOneLiner().c_str());
+    }
+    Reset();
 }
 
 std::string SST::RevCPU::RevTracer::RenderOneLiner()

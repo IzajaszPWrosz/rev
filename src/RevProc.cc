@@ -26,7 +26,7 @@ RevProc::RevProc( unsigned Id,
     CrackFault(false), ALUFault(false), fault_width(0),
     id(Id), HartToDecode(0), HartToExec(0), Retired(0x00ull),
     numHarts(NumHarts), opts(Opts), mem(Mem), coProc(nullptr), loader(Loader), AssignedThreads(AssignedThreads),
-    GetNewThreadID(GetNewTID), output(Output), tracer(nullptr), feature(nullptr),
+    GetNewThreadID(GetNewTID), output(Output), Tracer(nullptr), feature(nullptr),
     PExec(nullptr), sfetch(nullptr) {
 
   // initialize the machine model for the target core
@@ -1316,11 +1316,9 @@ RevInst RevProc::DecodeInst(){
   }
 
   if(0 != Inst){
-    #ifdef NO_REV_TRACER
     output->verbose(CALL_INFO, 6, 0,
                     "Core %" PRIu32 "; Hart %" PRIu32 "; Thread %" PRIu32 "; PC:InstPayload = 0x%" PRIx64 ":0x%" PRIx32 "\n",
                     id, HartToDecode, GetActiveThreadID(),  PC, Inst);
-    #endif
   }else{
     output->fatal(CALL_INFO, -1,
                   "Error: Core %" PRIu32 " failed to decode instruction at PC=0x%" PRIx64 "; Inst=%" PRIu32 "\n",
@@ -1330,9 +1328,7 @@ RevInst RevProc::DecodeInst(){
   }
 
   // Trace capture fetched instruction 
-  // place after next code block to include injected fault
-  if (tracer)
-    tracer->SetFetchedInsn(PC, Inst);
+  if (Tracer) Tracer->SetFetchedInsn(PC, Inst);
 
   // Stage 1a: handle the crack fault injection
   if( CrackFault ){
@@ -1668,7 +1664,6 @@ unsigned RevProc::GetHartID()const{
       }
       if(HART_CTS[nextID]){ break; };
     }
-    // TODO trace inclusion and #ifdef NO_REV_TRACER
     output->verbose(CALL_INFO, 6, 0,
                     "Core %" PRIu32 "; Hart switch from %" PRIu32 " to %" PRIu32 "\n",
                     id, HartToDecode, nextID);
@@ -1805,9 +1800,11 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
       DependencySet(HartToExec, &(Pipeline.back().second));
       // -- END new pipelining implementation
 
-      // Tracer context for execution
-      mem->SetTracer(tracer);
-      RegFile->tracer = tracer;
+      #ifndef NO_REV_TRACER
+      // Tracer context
+      mem->SetTracer(Tracer);
+      RegFile->SetTracer(Tracer);
+      #endif
     
       // execute the instruction
       if( !Ext->Execute(EToE.second, Pipeline.back().second, HartToExec, RegFile) ){
@@ -1815,20 +1812,13 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
                       "Error: failed to execute instruction at PC=%" PRIx64 ".", ExecPC );
       }
 
-      // TODO: method to determine origin of memory access.
+      #ifndef NO_REV_TRACER
+      // Clear memory tracer so we don't pick up instruction fetches and other access.
+      // TODO: method to determine origin of memory access (core, cache, pan, host debugger, ... )
       mem->SetTracer(nullptr);
-
-      // Conditionally trace
-      if (tracer) {
-        // Render instruction summary after execution
-        tracer->CheckUserControls(currentCycle);
-        if (tracer->OutputEnabled()) {
-          output->verbose(CALL_INFO, 5, 0,
-                "Core %d ; Thread %d]; *I %s\n", 
-                id, HartToExec, tracer->RenderOneLiner().c_str());
-        }
-        tracer->Reset(); // call after all rendering functions are done with data
-      }
+      // Conditionally trace after execution
+      if (Tracer) Tracer->InstTrace(currentCycle, id, HartToExec);
+      #endif
 
 #ifdef __REV_DEEP_TRACE__
       if(feature->IsRV32()){

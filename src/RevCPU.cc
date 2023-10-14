@@ -277,9 +277,9 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
   if (output.getVerboseLevel()>=5) {
     for( unsigned i=0; i<numCores; i++ ){
       // Each core gets its very own tracer
-      RevTracer* trc = new RevTracer(output.getVerboseLevel(), getName());
+      RevTracer* trc = new RevTracer(getName(), &output);
       std::string diasmType;
-      Opts->GetMachineModel(0,diasmType); 
+      Opts->GetMachineModel(0,diasmType); // TODO first param is core
       trc->SetDisassembler(diasmType);
       trc->SetTraceSymbols(Loader->GetTraceSymbols());
 

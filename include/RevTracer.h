@@ -12,6 +12,9 @@
 #ifndef _SST_REVCPU_REVTRACER_H_
 #define _SST_REVCPU_REVTRACER_H_
 
+// -- SST Headers
+#include "SST.h"
+
 // -- Standard Headers
 #include <cstdint>
 #include <ostream>
@@ -25,6 +28,21 @@
 // Integrated Disassembler (toolchain dependent)
 #ifndef NO_REV_TRACER
 #include "riscv/disasm.h"
+#endif
+
+// Tracing macros
+#ifndef NO_REV_TRACER
+#define TRACE_REG_READ(R,V)  { if (Tracer) Tracer->regRead(  (uint8_t) (R),(uint64_t) (V) ); }
+#define TRACE_REG_WRITE(R,V) { if (Tracer) Tracer->regWrite( (uint8_t) (R),(uint64_t) (V) ); }
+#define TRACE_PC_WRITE(PC)   { if (Tracer) Tracer->pcWrite( (uint64_t) (PC) ); }
+#define TRACE_MEM_WRITE(ADR, LEN, DATA) { if (Tracer) Tracer->memWrite( (ADR), (LEN), (DATA) ); }
+#define TRACE_MEM_READ(ADR, LEN, DATA)  { if (Tracer) Tracer->memRead(  (ADR), (LEN), (DATA) ); }
+#else
+#define TRACE_REG_READ(R,V)
+#define TRACE_REG_WRITE(R,V)
+#define TRACE_PC_WRITE(PC)
+#define TRACE_MEM_WRITE(ADR, LEN, DATA)
+#define TRACE_MEM_READ(ADR, LEN, DATA)
 #endif
 
 namespace SST{
@@ -87,7 +105,7 @@ namespace SST{
 
   class RevTracer{
     public:
-      RevTracer(unsigned Verbosity, std::string Name);
+      RevTracer(std::string Name, SST::Output* output);
       ~RevTracer();
 
       int SetDisassembler(std::string machine);
@@ -109,8 +127,9 @@ namespace SST{
       // program counter
       void pcWrite(uint64_t newpc);
 
-      // output at end of cycle with an executed instruction
-      std::string RenderOneLiner();
+      // render trace to output stream and reset capture buffer
+      void InstTrace(size_t cycle, unsigned id, unsigned hart);
+  
       void SetOutputEnable(bool e) { outputEnabled=e; }
       void Reset();
 
@@ -121,6 +140,7 @@ namespace SST{
       isa_parser_t* isaParser;
       disassembler_t* diasm;
       #endif
+      SST::Output *pOutput;
       bool outputEnabled;     // disable output but continue capturing
       TraceEvents_t events;
       std::vector<TraceRec_t> traceRecs;
@@ -132,6 +152,7 @@ namespace SST{
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);
       void fmt_data(unsigned len, uint64_t data, std::stringstream& s);
+      std::string RenderOneLiner();
 
       // user settings
       uint64_t startCycle;

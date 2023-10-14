@@ -67,12 +67,12 @@ class RevRegFile {
 public:
   const bool IsRV32;                  ///< RevRegFile: Cached copy of Features->IsRV32()
   const bool HasD;                    ///< RevRegFile: Cached copy of Features->HasD()
-  RevTracer *tracer;                  ///TODO privatize
 
 private:
   bool trigger{};                     ///< RevRegFile: Has the instruction been triggered?
   unsigned Entry{};                   ///< RevRegFile: Instruction entry
   uint32_t cost{};                    ///< RevRegFile: Cost of the instruction
+  RevTracer *Tracer;                  ///< RegRegFile: Tracer object
 
   union{  // Anonymous union. We zero-initialize the largest member
     uint32_t RV32_PC;                   ///< RevRegFile: RV32 PC
@@ -162,6 +162,9 @@ public:
     LSQueue = std::move(lsq);
   }
 
+  /// Set the current tracer
+  void SetTracer(RevTracer *t) { Tracer = t; }
+
   /// Insert an item in the Load/Store Queue
   void LSQueueInsert(std::pair<uint64_t, MemReq> item){
     LSQueue->insert(std::move(item));
@@ -221,7 +224,7 @@ public:
     }else{
       res = RevReg(rs) != RevReg::zero ? T(RV64[size_t(rs)]) : 0;
     }
-    if (tracer) tracer->regRead((uint8_t) rs,(uint64_t) res);
+    TRACE_REG_READ(rs,res);
     return res;
   }
 
@@ -236,7 +239,7 @@ public:
       res = RevReg(rd) != RevReg::zero ? uint64_t(val) : 0;
       RV64[size_t(rd)] = res;
     }
-    if (tracer) tracer->regWrite((uint8_t) rd, (uint64_t) res);
+    TRACE_REG_WRITE(rd, res);
   }
 
   /// GetPC: Get the Program Counter
@@ -253,10 +256,10 @@ public:
   void SetPC(T val) {
     if( IsRV32 ){
       RV32_PC = static_cast<uint32_t>(val);
-      if (tracer) tracer->pcWrite(RV32_PC);
+      TRACE_PC_WRITE(RV32_PC);
     }else{
       RV64_PC = static_cast<uint64_t>(val);
-      if (tracer) tracer->pcWrite(RV64_PC);
+      TRACE_PC_WRITE(RV64_PC);
     }
   }
 
@@ -265,10 +268,10 @@ public:
   void AdvancePC(T bytes) {
     if ( IsRV32 ) {
       RV32_PC += bytes;
-      if (tracer) tracer->pcWrite(RV32_PC);
+      TRACE_PC_WRITE(RV32_PC);
     }else{
       RV64_PC += bytes;
-      if (tracer) tracer->pcWrite(RV64_PC);
+      TRACE_PC_WRITE(RV64_PC);
     }
   }
 
