@@ -286,6 +286,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
       // tracer user controls - cycle on and off. Ignored unless > 0
       trc->SetStartCycle(params.find<uint64_t>("trcStartCycle",0));
       trc->SetCycleLimit(params.find<uint64_t>("trcLimit",0));
+      trc->SetCmdTemplate(params.find<std::string>("trcOp", TRC_OP_DEFAULT).c_str());
 
       trc->Reset();
       Procs[i]->SetTracer(trc);

@@ -28,11 +28,11 @@ RevTracer::RevTracer(std::string Name, SST::Output *o)
     enableQindex = 0;
 
     // Initialize NOP trace controls
-    uint32_t cmd_template = TRC_OP_DEFAULT_TEMPLATE;
+    uint32_t cmd_template = s2op.at(TRC_OP_DEFAULT);
     for (unsigned i=0;i<NOP_COUNT;i++)
-        nops[i]= cmd_template | (i << TRC_CMD_SHIFT);
+        nops[i]= cmd_template | (i << TRC_OP_POS);
 
-    #if 1
+    #if 0
     if (std::getenv("REV_SPINNER")){
         uint64_t spinner = 1;
         std::cout << "spinner active" << std::endl;
@@ -84,6 +84,21 @@ void SST::RevCPU::RevTracer::SetStartCycle(uint64_t c)
 void SST::RevCPU::RevTracer::SetCycleLimit(uint64_t c)
 {
     cycleLimit = c;
+}
+
+void SST::RevCPU::RevTracer::SetCmdTemplate(std::string cmd)
+{
+    if (s2op.find(cmd) == s2op.end()) {
+        std::stringstream s;
+        for (auto it = s2op.begin(); it != s2op.end(); it++) {
+            s << it->first << " ";
+        }
+        pOutput->fatal(CALL_INFO, -1, "Unsupported parameter [trcCmd=%s]. Supported values are: %s\n",cmd.c_str(),s.str().c_str());
+    }
+
+    unsigned cmd_template = s2op.at(cmd);
+    for (unsigned i=0;i<NOP_COUNT;i++)
+         nops[i]= cmd_template | (i << TRC_OP_POS);
 }
 
 void SST::RevCPU::RevTracer::CheckUserControls(uint64_t cycle)

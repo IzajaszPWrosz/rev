@@ -36,8 +36,9 @@ for i in range(0, sim_nodes):
         "memCost" : "[0:1:10]",                       # Memory loads required 1-10 cycles
         "program" : os.getenv("REV_EXE", "tracer.exe"),  # Target executable
         "splash" : 1,                                 # Display the splash message
-        "trcLimit": 0,                                # Maximum number of trace lines
-        "trcStartCycle" : 0                           # Starting trace cycle
+        # "trcOp": "slli",                            # base command for tracing [default: slli]
+        # "trcLimit": 0,                              # Maximum number of trace lines [default: 0]
+        # "trcStartCycle" : 0                         # Starting trace cycle [default: 0]
         })
   comp_cpu.enableAllStatistics()
 

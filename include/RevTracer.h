@@ -50,18 +50,23 @@ namespace SST{
 
   // Tracing controls are using custom hint SLTI rd = x0
   // See unpriv-isa-asiidoc.pdf Section 2.9 HINT Instruction
-  // OP     RD    Space  Assembly          Encoding    //
-  // SLTI   rd=x0 2^17   slti  x0, x0, ?   0x00?02013  //
-  // SLTIU  rd=x0 2^17   sltiu x0, x0, ?   0x00?03013  //
-  // SLLI   rd=x0 2^10   slli  x0, x0, ?   0x00?01013  // Default
-  // SRLI   rd=x0 2^10   srli  x0, x0, ?   0x00?05013  //
-  // SRAI   rd=x0 2^10   srai  x0, x0, ?   0x40?05013  //
-  // SLT    rd=x0 2^10   slt   x0, x0, x?  0x00?02033  // Not supported
-  // SLTU   rd=x0 2^10   sltu  x0, x0, x?  0x00?03033  // Not supported
-  const uint32_t TRC_OP_DEFAULT_TEMPLATE = 0x00001013;
-
-  // Position of command nibble
-  const int TRC_CMD_SHIFT = 20;
+  // OP     RD    Space  Assembly           Encoding 
+  // SLTI   rd=x0 2^17   slti  x0, x0, ?    0x00?02013  //
+  // SLTIU  rd=x0 2^17   sltiu x0, x0, ?    0x00?03013  //
+  // SLLI   rd=x0 2^10   slli  x0, x0, ?    0x00?01013  // Default
+  // SRLI   rd=x0 2^10   srli  x0, x0, ?    0x00?05013  //
+  // SRAI   rd=x0 2^10   srai  x0, x0, ?    0x40?05013  //
+  // SLT    rd=x0 2^10   slt   x0, x0, x?   0x00?02033  // Not supported
+  // SLTU   rd=x0 2^10   sltu  x0, x0, x?   0x00?03033  // Not supported
+  const std::map<std::string, uint32_t> s2op {
+    {"slti",  0x00002013}, 
+    {"sltiu", 0x00003013},
+    {"slli",  0x00001013},
+    {"srli",  0x00005013},
+    {"srai",  0x40005013}
+  };
+  const std::string TRC_OP_DEFAULT = "slli";
+  const int TRC_OP_POS = 20;
 
   // Position of fully formed instruction in 'nops' array
   enum TRC_CMD_IDX : unsigned {
@@ -130,6 +135,8 @@ namespace SST{
       int SetTraceSymbols(std::map<uint64_t,std::string>* TraceSymbols);
       void SetStartCycle(uint64_t c);
       void SetCycleLimit(uint64_t c);
+      void SetCmdTemplate(std::string cmd);
+
       void CheckUserControls(uint64_t cycle);
       void SetFetchedInsn(uint64_t _pc, uint32_t _insn);
       bool OutputEnabled();
