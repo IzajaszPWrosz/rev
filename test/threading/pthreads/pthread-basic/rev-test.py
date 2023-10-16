@@ -22,7 +22,7 @@ max_addr_gb = 1
 # Define the simulation components
 comp_cpu = sst.Component("cpu", "revcpu.RevCPU")
 comp_cpu.addParams({
-        "verbose" : 12,                                # Verbosity
+        "verbose" : 5,                                # Verbosity
         "numCores" : 1,                               # Number of cores
         "numHarts" : 2,                               # Number of harts per core
         "clock" : "1.0GHz",                           # Clock

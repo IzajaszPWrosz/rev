@@ -9,7 +9,7 @@
 #define TRACE_PUSH_OFF asm volatile("xori x0,x0,2"); // 00204013
 #define TRACE_PUSH_ON  asm volatile("xori x0,x0,3"); // 00304013
 #define TRACE_POP      asm volatile("xori x0,x0,4"); // 00404013
-#define assert(x) { TRACE_PUSH_ON;	    \
+#define TRACE_ASSERT(x) { TRACE_PUSH_ON;	    \
   if (!(x)) { asm volatile(".word 0x0"); }; \
   TRACE_PUSH_OFF }
 #else
@@ -18,7 +18,7 @@
 #define TRACE_PUSH_OFF
 #define TRACE_PUSH_ON
 #define TRACE_POP
-#define assert(x)      
+#define TRACE_ASSERT(x)      
 #endif
 
 #endif // __REV_MACROS_H__

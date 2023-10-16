@@ -175,13 +175,13 @@ void SST::RevCPU::RevTracer::pcWrite(uint64_t newpc)
     traceRecs.emplace_back(TraceRec_t(PcWrite,newpc,0,0));
 }
 
-void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart)
+void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid)
 {
     CheckUserControls(cycle);
     if (OutputEnabled()){
         pOutput->verbose(CALL_INFO, 5, 0,
-                         "Core %d ; Thread %d]; *I %s\n",
-                         id, hart, RenderOneLiner().c_str());
+                         "Core %" PRIu32 "; Hart %" PRIu32 "; Thread %" PRIu32 "]; *I %s\n",
+                         id, hart, tid, RenderOneLiner().c_str());
     }
     Reset();
 }
@@ -204,6 +204,7 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner()
         ss_disasm << hex << diasm->disassemble(insn) << "\t";
     else
     #endif
+        // TODO rev instruction string
         ss_disasm << hex << setw(8) << setfill('0') << hex << "0x" << insn << "\t";
 
     // Initial rendering

@@ -15,6 +15,8 @@
 #include <cstdint>
 #include "rev-macros.h"
 
+#define assert TRACE_ASSERT
+
 // inefficient calculation of r-s
 int long_sub(int r, int s) {
   for (int i=0;i<s;i++)

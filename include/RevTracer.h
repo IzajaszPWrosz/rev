@@ -128,7 +128,7 @@ namespace SST{
       void pcWrite(uint64_t newpc);
 
       // render trace to output stream and reset capture buffer
-      void InstTrace(size_t cycle, unsigned id, unsigned hart);
+      void InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid);
   
       void SetOutputEnable(bool e) { outputEnabled=e; }
       void Reset();
