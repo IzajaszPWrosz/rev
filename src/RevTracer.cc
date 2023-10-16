@@ -14,7 +14,6 @@
 #include <string>
 
 #include "../include/RevTracer.h"
-#include "../include/kg_globals.h"
 #include "RevTracer.h"
 
 using namespace SST::RevCPU;
@@ -28,8 +27,13 @@ RevTracer::RevTracer(std::string Name, SST::Output *o)
     enableQ.assign(MAX_ENABLE_Q,0);
     enableQindex = 0;
 
+    // Initialize NOP trace controls
+    uint32_t cmd_template = TRC_OP_DEFAULT_TEMPLATE;
+    for (unsigned i=0;i<NOP_COUNT;i++)
+        nops[i]= cmd_template | (i << TRC_CMD_SHIFT);
+
     #if 1
-    if (std::getenv("USE_SPINNER")){
+    if (std::getenv("REV_SPINNER")){
         uint64_t spinner = 1;
         std::cout << "spinner active" << std::endl;
         while (spinner){
@@ -39,7 +43,7 @@ RevTracer::RevTracer(std::string Name, SST::Output *o)
         }
         std::cout << std::endl;
     }
-#endif
+    #endif
 }
 
 SST::RevCPU::RevTracer::~RevTracer()
@@ -107,19 +111,19 @@ void SST::RevCPU::RevTracer::CheckUserControls(uint64_t cycle)
 
     // programatic controls
     bool nextState = outputEnabled;
-    if (insn == TRC_CONTROL_NOP::TRACE_OFF) {
+    if (insn == nops[TRACE_OFF]) {
         nextState = false;
-    } else if (insn == TRC_CONTROL_NOP::TRACE_ON) {
+    } else if (insn == nops[TRACE_ON]) {
         nextState = true;
-    } else if (insn == TRC_CONTROL_NOP::TRACE_PUSH_OFF) {
+    } else if (insn == nops[TRACE_PUSH_OFF]) {
         enableQ[enableQindex] = outputEnabled;
         enableQindex = (enableQindex + 1 ) % MAX_ENABLE_Q;
         nextState = false;
-    } else if (insn == TRC_CONTROL_NOP::TRACE_PUSH_ON) {
+    } else if (insn == nops[TRACE_PUSH_ON]) {
         enableQ[enableQindex] = outputEnabled;
         enableQindex = (enableQindex + 1 ) % MAX_ENABLE_Q;
         nextState = true;
-    } else if (insn == TRC_CONTROL_NOP::TRACE_POP) {
+    } else if (insn == nops[TRACE_POP]) {
         enableQindex = (enableQindex - 1 ) % MAX_ENABLE_Q;
         nextState = enableQ[enableQindex];
     }

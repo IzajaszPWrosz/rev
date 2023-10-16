@@ -44,6 +44,7 @@ volatile int check_push_off(int r, int s) {
 }
 
 int main(int argc, char **argv){
+  
   // tracing is initially off
   int res=3000;
   res = long_sub(res,1000);

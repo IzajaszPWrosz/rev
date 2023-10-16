@@ -1,14 +1,12 @@
 #ifndef __REV_MACROS_H__
 #define __REV_MACROS_H__
 
-#define NOP asm volatile("nop");
-
 #ifndef NO_REV_MACROS
-#define TRACE_OFF      asm volatile("xori x0,x0,0"); // 00004013
-#define TRACE_ON       asm volatile("xori x0,x0,1"); // 00104013
-#define TRACE_PUSH_OFF asm volatile("xori x0,x0,2"); // 00204013
-#define TRACE_PUSH_ON  asm volatile("xori x0,x0,3"); // 00304013
-#define TRACE_POP      asm volatile("xori x0,x0,4"); // 00404013
+#define TRACE_OFF      asm volatile("slli x0,x0,0"); // 00081013
+#define TRACE_ON       asm volatile("slli x0,x0,1"); // 00181013
+#define TRACE_PUSH_OFF asm volatile("slli x0,x0,2"); // 00281013
+#define TRACE_PUSH_ON  asm volatile("slli x0,x0,3"); // 00381013
+#define TRACE_POP      asm volatile("slli x0,x0,4"); // 00481013
 #define TRACE_ASSERT(x) { TRACE_PUSH_ON;	    \
   if (!(x)) { asm volatile(".word 0x0"); }; \
   TRACE_PUSH_OFF }

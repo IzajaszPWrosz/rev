@@ -48,13 +48,31 @@
 namespace SST{
   namespace RevCPU{
 
-  enum TRC_CONTROL_NOP : uint32_t {
-    TRACE_OFF      = 0x00004013, // xori x0,x0,0
-    TRACE_ON       = 0x00104013, // xori x0,x0,1
-    TRACE_PUSH_OFF = 0x00204013, // xori x0,x0,2
-    TRACE_PUSH_ON  = 0x00304013, // xori x0,x0,3
-    TRACE_POP      = 0x00404013  // xori x0,x0,4
+  // Tracing controls are using custom hint SLTI rd = x0
+  // See unpriv-isa-asiidoc.pdf Section 2.9 HINT Instruction
+  // OP     RD    Space  Assembly          Encoding    //
+  // SLTI   rd=x0 2^17   slti  x0, x0, ?   0x00?02013  //
+  // SLTIU  rd=x0 2^17   sltiu x0, x0, ?   0x00?03013  //
+  // SLLI   rd=x0 2^10   slli  x0, x0, ?   0x00?01013  // Default
+  // SRLI   rd=x0 2^10   srli  x0, x0, ?   0x00?05013  //
+  // SRAI   rd=x0 2^10   srai  x0, x0, ?   0x40?05013  //
+  // SLT    rd=x0 2^10   slt   x0, x0, x?  0x00?02033  // Not supported
+  // SLTU   rd=x0 2^10   sltu  x0, x0, x?  0x00?03033  // Not supported
+  const uint32_t TRC_OP_DEFAULT_TEMPLATE = 0x00001013;
+
+  // Position of command nibble
+  const int TRC_CMD_SHIFT = 20;
+
+  // Position of fully formed instruction in 'nops' array
+  enum TRC_CMD_IDX : unsigned {
+    TRACE_OFF = 0,
+    TRACE_ON = 1,
+    TRACE_PUSH_OFF = 2,
+    TRACE_PUSH_ON = 3,
+    TRACE_POP = 4
   };
+
+  constexpr unsigned NOP_COUNT = TRC_CMD_IDX::TRACE_POP + 1;
   
   enum class EVENT_SYMBOL : unsigned {
     OK = 0x0,
@@ -148,6 +166,7 @@ namespace SST{
       uint32_t insn;
       std::map<uint64_t,std::string>* traceSymbols;
       uint64_t lastPC;    // avoid displaying sequential addresses
+      uint32_t nops[NOP_COUNT];
     
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);
