@@ -20,8 +20,9 @@ using namespace SST::RevCPU;
 using namespace std;
 
 RevTracer::RevTracer(std::string Name, SST::Output *o)
-: name(Name), pOutput(o), outputEnabled(false), insn(0), traceSymbols(nullptr),
-  lastPC(0), startCycle(0), cycleLimit(0), traceCycles(0), disabled(0) {
+    : name(Name), pOutput(o), outputEnabled(false), lastPC(0), insn(0), 
+    traceSymbols(nullptr), startCycle(0), cycleLimit(0), traceCycles(0), 
+    disabled(0) {
     
     enableQ.resize(MAX_ENABLE_Q);
     enableQ.assign(MAX_ENABLE_Q,0);
