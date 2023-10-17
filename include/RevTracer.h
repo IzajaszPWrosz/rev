@@ -26,7 +26,7 @@
 // -- Rev Headers
 
 // Integrated Disassembler (toolchain dependent)
-#ifndef NO_REV_TRACER
+#ifdef REV_USE_SPIKE
 #include "riscv/disasm.h"
 #endif
 
@@ -153,7 +153,7 @@ namespace SST{
       void pcWrite(uint64_t newpc);
 
       // render trace to output stream and reset capture buffer
-      void InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid);
+      void InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid, std::string& fallbackMnemonic);
   
       void SetOutputEnable(bool e) { outputEnabled=e; }
       void Reset();
@@ -161,7 +161,7 @@ namespace SST{
     private:
       std::string name;
       // TODO Generic interface wrappers that allow using any disassembler
-      #ifndef NO_REV_TRACER
+      #ifdef REV_USE_SPIKE
       isa_parser_t* isaParser;
       disassembler_t* diasm;
       #endif
@@ -178,7 +178,7 @@ namespace SST{
       // formatters
       void fmt_reg(uint8_t r, std::stringstream& s);
       void fmt_data(unsigned len, uint64_t data, std::stringstream& s);
-      std::string RenderOneLiner();
+      std::string RenderOneLiner(std::string& fallbackMnemonic);
 
       // user settings
       uint64_t startCycle;

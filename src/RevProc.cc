@@ -1818,7 +1818,7 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
       // TODO: method to determine origin of memory access (core, cache, pan, host debugger, ... )
       mem->SetTracer(nullptr);
       // Conditionally trace after execution
-      if (Tracer) Tracer->InstTrace(currentCycle, id, HartToExec, GetActiveThreadID()); // id, HartToExec, GetActiveThreadID()
+      if (Tracer) Tracer->InstTrace(currentCycle, id, HartToExec, GetActiveThreadID(), InstTable[Inst.entry].mnemonic);
       #endif
 
 #ifdef __REV_DEEP_TRACE__

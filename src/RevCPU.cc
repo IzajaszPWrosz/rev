@@ -280,7 +280,9 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
       RevTracer* trc = new RevTracer(getName(), &output);
       std::string diasmType;
       Opts->GetMachineModel(0,diasmType); // TODO first param is core
-      trc->SetDisassembler(diasmType);
+      if (trc->SetDisassembler(diasmType))
+        output.verbose(CALL_INFO, 1, 0, "Warning: tracer could not find disassembler. Using REV default\n");
+      
       trc->SetTraceSymbols(Loader->GetTraceSymbols());
 
       // tracer user controls - cycle on and off. Ignored unless > 0

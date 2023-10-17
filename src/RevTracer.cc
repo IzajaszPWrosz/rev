@@ -48,7 +48,7 @@ RevTracer::RevTracer(std::string Name, SST::Output *o)
 
 SST::RevCPU::RevTracer::~RevTracer()
 {
-    #ifndef NO_REV_TRACER
+    #ifdef REV_USE_SPIKE
     if (diasm) delete diasm;
     if (isaParser) delete isaParser;
     #endif
@@ -56,7 +56,7 @@ SST::RevCPU::RevTracer::~RevTracer()
 
 int SST::RevCPU::RevTracer::SetDisassembler(std::string machine)
 {
-    #ifndef NO_REV_TRACER
+    #ifdef REV_USE_SPIKE
     try {
         // TODO privelege level options
         isaParser = new isa_parser_t(machine.c_str(),"MSU");
@@ -194,18 +194,18 @@ void SST::RevCPU::RevTracer::pcWrite(uint64_t newpc)
     traceRecs.emplace_back(TraceRec_t(PcWrite,newpc,0,0));
 }
 
-void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid)
+void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid, std::string& fallbackMnemonic)
 {
     CheckUserControls(cycle);
     if (OutputEnabled()){
         pOutput->verbose(CALL_INFO, 5, 0,
                          "Core %" PRIu32 "; Hart %" PRIu32 "; Thread %" PRIu32 "]; *I %s\n",
-                         id, hart, tid, RenderOneLiner().c_str());
+                         id, hart, tid, RenderOneLiner(fallbackMnemonic).c_str());
     }
     Reset();
 }
 
-std::string SST::RevCPU::RevTracer::RenderOneLiner()
+std::string SST::RevCPU::RevTracer::RenderOneLiner(std::string& fallbackMnemonic)
 {
     // Flow Control Events
     std::stringstream ss_events;
@@ -218,13 +218,20 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner()
     
     // Disassembly
     std::stringstream ss_disasm;
-    #ifndef NO_REV_TRACER
+    #ifdef REV_USE_SPIKE
     if (diasm)
         ss_disasm << hex << diasm->disassemble(insn) << "\t";
     else
     #endif
-        // TODO rev instruction string
-        ss_disasm << hex << setw(8) << setfill('0') << hex << "0x" << insn << "\t";
+    {
+        //ss_disasm << hex << setw(8) << setfill('0') << hex << "0x" << insn << "\t";
+        // TODO internal rev disassembler
+        auto pos = fallbackMnemonic.find(' ');
+        if (pos != std::string::npos)
+            ss_disasm << fallbackMnemonic.substr(0, pos) << "\t";
+        else
+            ss_disasm << "?" << "\n";
+    }
 
     // Initial rendering
     stringstream os;
@@ -297,7 +304,7 @@ void SST::RevCPU::RevTracer::Reset()
 
 void SST::RevCPU::RevTracer::fmt_reg(uint8_t r, std::stringstream& s)
 {
-    #ifndef NO_REV_TRACER
+    #ifdef REV_USE_SPIKE
     if (r<32) {
         s<<xpr_name[r];
         return;
