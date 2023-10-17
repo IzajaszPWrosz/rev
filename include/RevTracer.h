@@ -146,8 +146,8 @@ namespace SST{
       void regWrite(uint8_t r, uint64_t v);
 
       // memory requests
-      void memWrite(uint64_t adr, unsigned len, const void *data);
-      void memRead(uint64_t adr, unsigned len, void *data);
+      void memWrite(uint64_t adr, size_t len, const void *data);
+      void memRead(uint64_t adr, size_t len, void *data);
 
       // program counter
       void pcWrite(uint64_t newpc);

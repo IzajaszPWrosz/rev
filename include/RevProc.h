@@ -99,8 +99,8 @@ public:
   /// RevProc: Set the PAN execution context
   void SetExecCtx(PanExec *P) { PExec = P; }
 
-      /// RevProc: Set an optional tracer
-      void SetTracer(RevTracer *T) { Tracer = T; }
+  /// RevProc: Set an optional tracer
+  void SetTracer(RevTracer *T) { Tracer = T; }
 
   /// RevProc: Retrieve a random memory cost value
   unsigned RandCost() { return mem->RandCost(feature->GetMinCost(), feature->GetMaxCost()); }
@@ -241,7 +241,7 @@ private:
 
   RevRegFile* RegFile = nullptr; ///< RevProc: Initial pointer to HartToDecode RegFile
 
-  RevTracer* Tracer;            ///< RevProc: Tracer object
+  RevTracer* Tracer = nullptr;            ///< RevProc: Tracer object
   
   std::bitset<_MAX_HARTS_> CoProcStallReq;
   ///< RevProc: Utility function for system calls that involve reading a string from memory

@@ -125,7 +125,7 @@ public:
   void SetStackTop(uint64_t Addr) { stacktop = Addr; }
 
   /// RevMem: tracer pointer
-  RevTracer* Tracer;
+  RevTracer *Tracer = nullptr;
 
   /// RevMem: retrieve the address of the top of memory (not stack)
   uint64_t GetMemTop() { return (_REVMEM_BASE_ + memSize); }

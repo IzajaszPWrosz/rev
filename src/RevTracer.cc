@@ -170,7 +170,7 @@ void SST::RevCPU::RevTracer::regWrite(uint8_t r, uint64_t v)
     traceRecs.emplace_back(TraceRec_t(RegWrite,r,v));
 }
 
-void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len,  const void *data)
+void SST::RevCPU::RevTracer::memWrite(uint64_t adr, size_t len,  const void *data)
 {
     // Only tracing the first 64 bytes. Retaining pointer in case we change that.
     uint64_t d = *((uint64_t*) data);
@@ -183,7 +183,7 @@ void SST::RevCPU::RevTracer::memWrite(uint64_t adr, unsigned len,  const void *d
     traceRecs.emplace_back(TraceRec_t(MemStore,adr,len,d));
 }
 
-void SST::RevCPU::RevTracer::memRead(uint64_t adr, unsigned len, void *data)
+void SST::RevCPU::RevTracer::memRead(uint64_t adr, size_t len, void *data)
 {
     uint64_t d = *((uint64_t*) data);
     traceRecs.emplace_back(TraceRec_t(MemLoad,adr,len,d)); 
@@ -311,6 +311,7 @@ void SST::RevCPU::RevTracer::fmt_reg(uint8_t r, std::stringstream& s)
     }
     s << "?" << (unsigned)r;
     #endif
+    // TODO internal format
 }
 
 void SST::RevCPU::RevTracer::fmt_data(unsigned len, uint64_t d, std::stringstream &s)

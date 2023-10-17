@@ -72,7 +72,7 @@ private:
   bool trigger{};                     ///< RevRegFile: Has the instruction been triggered?
   unsigned Entry{};                   ///< RevRegFile: Instruction entry
   uint32_t cost{};                    ///< RevRegFile: Cost of the instruction
-  RevTracer *Tracer;                  ///< RegRegFile: Tracer object
+  RevTracer *Tracer = nullptr;                  ///< RegRegFile: Tracer object
 
   union{  // Anonymous union. We zero-initialize the largest member
     uint32_t RV32_PC;                   ///< RevRegFile: RV32 PC

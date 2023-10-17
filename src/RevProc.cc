@@ -27,7 +27,7 @@ RevProc::RevProc( unsigned Id,
     id(Id), HartToDecode(0), HartToExec(0), Retired(0x00ull),
     numHarts(NumHarts), opts(Opts), mem(Mem), coProc(nullptr), loader(Loader),
     AssignedThreads(AssignedThreads), GetNewThreadID(std::move(GetNewTID)),
-    output(Output), Tracer(nullptr), feature(nullptr), PExec(nullptr), sfetch(nullptr) {
+    output(Output), feature(nullptr), PExec(nullptr), sfetch(nullptr), Tracer(nullptr) {
 
   // initialize the machine model for the target core
   std::string Machine;
