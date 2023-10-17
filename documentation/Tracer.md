@@ -1,78 +1,150 @@
 1. Overview
------------
+------------
 
-Provides compact visualization of instruction execution
-with disassembly and register accesses shown on one line.
+Provides compact visualization of instruction execution with disassembly,
+register, and core initiated memory access shown on a single line.
+register accesses shown on one line.
 
 2. Usage
---------
 
-The tracer will be enabled for verbosity >= 5.
+2.1 Compile options
+-------------------
 
-Requires GCC tools and links to libdisasm.a which is part of
-rev_isa_sim (Spike).
+The execution tracer is configured using the following cmake compile options:
 
-If the library is not found the tracer compilation is disabled.
+ REV_TRACER
+	ON : compile for tracing (default)
+	OFF: do not compile in tracing support 
+	
+ REV_USE_SPIKE :
+ 	ON  : Use spike libdiasm.a for disassembly
+	OFF : Use internal REV instruction format
+        
+Requires GCC tools and links to libdisasm.a which is part of rev_isa_sim
+(Spike). If this library is not found the tracer compilation is disabled.
+It can also be explicitely disabled by setting REV_USE_SPIKE = OFF.
 
-To explicitly disable compilation of tracer in cmake use:
-  -DREV_TRACER="OFF"
+Previous instruction execution trace output is replaced by the compact tracer
+format. Compiling with REV_TRACER=0 will revert the output to to the old
+format.
 
-A tagged revision provides an earlier version that does not
-require any libraries. To evaluate this use:
-   git checkout NO_LIB
+2.2 Runtime options
+-------------------
+The tracer is enabled using verbosity >= 5.
 
-3. Testing
-----------
+sst-info revcpu will now includes the following additional options:
 
-After building following the instructions in Readme.md
-the tracer can be tested as follows:
+  trcOp: Tracer instruction trigger  [slli]
+  trcLimit: Max trace lines per core (0 no limit)  [0]
+  trcStartCycle: Starting tracer cycle (disables trcOp)  [0]
 
-  cd test/tracer; ./run_tracer.sh > trc; diff gold.trc trc
+To achieve compact traces, the tracer is initially off. The user must
+enable it using one of two methods:
+
+  a. Programatic Controls: These are 'nop' instructions embedded in the
+     target code that will activate or deactive tracing. This allows for
+     tracing only specific code of interest and avoiding extreme file sizes.
+     The 'trcOp' option provides the base opcode and must be the following
+     subset of custom hints defined in the RISCV specification:
+     
+     	    slti, sltiu, slli, srli, srai
 
 
-4. Tracer Output
-----------------
+  b. Cycle Based control: This simply allows the user to specify
+     a starting cycle to start tracing for a CPU. This will affect
+     affect all cores and will defeat all programatic controls.
+     However, setting 'trcCycle' to 0 will have no effect.
+
+     Important: trcStartCycle and trcLimit are specified in terms
+     of REV cycles, not time.
+
+3. Test Sample
+
+3.1 Build and Run
+-------------------
+
+After building using the instructions in Readme.me:
+
+   cd test/tracer; ./run_tracer.sh 
+
+3.2. Tracing Macros
+-------------------
+
+Programatic controls are realized through macros provided in 'rev-macros.h'
+'. These are by default
+
+   #define TRACE_OFF      asm volatile("slli x0,x0,0"); 
+   #define TRACE_ON       asm volatile("slli x0,x0,1"); 
+   #define TRACE_PUSH_OFF asm volatile("slli x0,x0,2"); 
+   #define TRACE_PUSH_ON  asm volatile("slli x0,x0,3"); 
+   #define TRACE_POP      asm volatile("slli x0,x0,4");
+
+If there is a conflict with the 'slli' instruction, it can instruction
+can be changed using the 'trcOp' option. The header file must be changed
+to match or tracing will not be enabled. See 2.2 for the list of
+supported instructions.
+
+
+
+When one of these instruction is encountered the trace will indicate
+and on or off event using '+' or '-' before the instruction mnemonic.
+
+Example:
+
+// tracing starts
+RevCPU[cpu0:InstTrace:18156000]: Core 0; Hart 0; Thread 1]; *I 0x10330:00301013  + slli    zero, zero, 3	 0x0<-zero zero<-0x0 pc<-0x10334 
+RevCPU[cpu0:InstTrace:18157000]: Core 0; Hart 0; Thread 1]; *I 0x10334:fec42703    lw      a4, -20(s0)	 0x3ffffba0<-s0 0x000003de<-[0x3ffffb8c,4] a4<-0x3de 
+RevCPU[cpu0:InstTrace:18158000]: Core 0; Hart 0; Thread 1]; *I 0x10338:3de00793    li      a5, 990	 0x0<-zero a5<-0x3de 
+RevCPU[cpu0:InstTrace:18159000]: Core 0; Hart 0; Thread 1]; *I 0x1033c:00f70463    beq     a4, a5, pc + 8	 0x3de<-a4 0x3de<-a5 pc<-0x10344 
+RevCPU[cpu0:InstTrace:18160000]: Core 0; Hart 0; Thread 1]; *I 0x10344:00201013  - slli    zero, zero, 2	 0x0<-zero zero<-0x0
+// no tracing between cycles 18160 and 27090
+RevCPU[cpu0:InstTrace:27090000]: Core 0; Hart 0; Thread 1]; *I 0x10358:00301013  + slli    zero, zero, 3	 0x0<-zero zero<-0x0 pc<-0x1035c 
+RevCPU[cpu0:InstTrace:27091000]: Core 0; Hart 0; Thread 1]; *I 0x1035c:fec42783    lw      a5, -20(s0)	 0x3ffffba0<-s0 0x00000000<-[0x3ffffb8c,4] a5<-0x0 
+RevCPU[cpu0:InstTrace:27092000]: Core 0; Hart 0; Thread 1]; *I 0x10360:00078463    beqz    a5, pc + 8	 0x0<-a5 0x0<-zero pc<-0x10368 
+RevCPU[cpu0:InstTrace:27093000]: Core 0; Hart 0; Thread 1]; *I 0x10368:00201013  - slli    zero, zero, 2	 0x0<-zero zero<-0x0 
+// tracing ends
+
+4.  Tracer Output
+-------------------
 
 4.1 Logging prefix
+-------------------
+
   The tracer output is prefixed by the standard logging information with
   an additional text to support extraction from the log file.
 
-   |--   Standard logging prefix               --| key |
-   RevCPU[cpu:ClockTick:5000]: Core 7 ; Thread 0]; *I
-
-  This prefix will be omitted for the examples in this document.
+   |--   Standard logging prefix                           --| key |
+    RevCPU[cpu0:InstTrace:18156000]: Core 0; Hart 0; Thread 1]; *I 
 
 4.2 Register to Register Format
+--------------------------------
 
-  |  PC   | INSN   |  Disassembly   |              Effects                   |
-   0x10220:03010413 addi s0, sp, 48  0x3fefff60<-sp 0x11f50<-s0 s0<-0x3fefff90
-
+  |  PC   : INSN     |  Disassembly             |         Effects          |
+   0x10474:00c50533    add     a0, a0, a2	 0x14<-a0 0x50<-a2 a0<-0x64 
 
   Notice that the effects include the same register naming conventions
   as the disassembled instruction. 
 
   Effects interpretation:
-   0x3fefff60<-sp  : Source register read
-   0x11f50<-s0     : Original value of destination register. This is not an
-                     actual read but it is provided for debugging convenience.
-   s0<-0x3fefff90  : Destination register write
+   data<-reg  : Source register read
+   reg<-data  : Destination register write
 
 4.3 Register to Memory (Store)
+------------------------------
+  |  PC  : INSN    |     Disassembly    |
+  0x10220:fef42623  sw      a5, -20(s0)	 
 
-  |  PC   | INSN    | Disassembly  |
-   0x101e0:00812e23   sw s0, 28(sp) 
+  |                    Effects                        |
+    0x3ffffb60<-s0 0x64<-a5 [0x3ffffb4c,4]<-0x00000064
 
-  |                      Effects                          |
-  0x3fefff40<-sp 0x3fefff90<-s0 [0x3fefff5c,4]<-0x3fefff90 
-
-  Effects interpretation:
-   0x3fefff40<-sp  : Source register read
-   0x3fefff90<-s0  : Source register read
-   [0x3fefff5c,4]<-0x3fefff90 : [Logical Mem Address, Len(bytes)] <- Data
+Effects interpretation:
+   data<-reg  : Source register read
+   [logical address, number of bytes]<-data : write initiated from core
 
 4.4 Memory to Register (Load)
+-----------------------------
 
-  |  PC   | INSN    |    Disassembly    |
+  |  PC  : INSN    |    Disassembly      |
   0x102d4:fec42783    lw      a5, -20(s0)	 
 
   |                          Effects                              |
@@ -80,112 +152,31 @@ the tracer can be tested as follows:
   
   Effects interpretation:
 
-    0x3fefff90<-s0  : Source register read
-    0x0<-a5         : Destination register original value (convenience)
-    0xacee1190<-[0x3fefff7c,4] : Data <- [Logical Mem Address, Len(bytes)]
-    a5<-0xacee1190  : Register write
-    
+   data<-reg  : Source register read
+   reg<-data  : Destination register write
+   reg<-[logical address, number of bytes] : returning load data
+   
 4.5 Program Counter Writes (Branches/Jumps)
+--------------------------------------------
 
-  |  PC   | INSN   |  Disassembly  |             Effects                      |
+  |  PC   | INSN   |  Disassembly  |             Effects                       |
   0x102a8:f35ff0ef  jal  pc - 0xcc  0x0<-ra ra<-0x102ac pc<-0x101dc <_Z5checki>
 
   Effects interpretation:
-   0x0<-ra     : Destinatino register read (convenience)
-   ra<-0x102ac : Destintation link register write
-   pc<-0x101dc : Resolved branch target
+   data<-reg  : Source register read
+   reg<-data  : Destination link register write
+   pc<-address: Resolved branch target
    <_Z5checki> : Matching ELF symbol associated with new PC
    
 
-5. Programmer controls
----------------------
-
- Currently there is a single control that can be used to disable and
- enable tracing in assembly code on a per core basis.
-
-   asm volatile("xor x0,x0,x0");  // 0x4033 toggle tracing enable
-
- This is particularly useful in avoiding tracing polling loops that
- could generate millions of lines of useless tracing information.
-
- In the trace, the trace on/off information is rendered in a special
- 'event' field as shown below.
-
-                                  * Event field ('-' turning trace off )
- RevCPU[cpu:ClockTick:14000]: ... - xor zero, zero, zero  ...
-                                        * Event field ('-' turning trace on )
- RevCPU[cpu:ClockTick:1100022000]: ...  + xor     zero, zero, zero ...
-
-                                                        Event Field ->|
- RevCPU[cpu:ClockTick:14000]: Core 7; Thread 0]; *I 0x10244:00004033  - \
-      xor     zero, zero, zero	 0x0<-zero 0x0<-zero 0x0<-zero zero<-0x0 
- RevCPU[cpu:ClockTick:1100022000]: Core 0 ... ]; *I 0x1027c:00004033  + \
-      xor     zero, zero, zero	 0x0<-zero 0x0<-zero 0x0<-zero zero<-0x0 
-
- The '-' event indicates the tracing is disabled.
- The '+' event indicates the tracing is enbabled.
-
- Observe the large number of ClockTick's in the intervening code that
- was used by a polling loop.
-
-6. Issues/Enhancements
+5. Issues/Enhancements
 ----------------------
 
-  - This version only works with RISCV GCC toolchain and links
-    to disasm.a (part of spike simulator). Should be able to
-    support llvm-disasm as well at some point. This will require
-    an interface wrapper for disassembler objects to support
-    various implementations. This would also require more sophisticated
-    support in CMakeLists.txt.
-
-  - Tracing is on when SST VERBOSE>=5. This could cause log file
-    sizes to blow up (but maybe that is expected for highly
-    verbose outputs). Another option would be to have it disabled
-    until the magic 'xor' instruction toggles the trace enable.
+  - Instruction tracing for integer operations is mostly covered. Other
+    instruction types (floating point, coprocessor, vector,... ) are not.
   
-  - Threading has not been tested. Conversely, testing has only
-    been done using
-          #define _REV_HART_COUNT_ 1 (RevInstTable.h)
+  - ECalls are also not yet traced
 
-  - Network requests are not currently traced. For this initial
-    prototype only the execution phase of an instruction is traced.
-  
-  - Tracing for register and memory access in RV32I.h and RV64I.h
-    is enabled. All other RV*.h files will not be traced. Fencing,
-    ECalls, and any other operations that are not simple memory or
-    register operations are also not traced.
+  - Tracing information may be sent to different output streams in more
+    compact formats in the future.
 
-  - Need to be able to link to the spike disasm.a file.
-    For the prototype ALL the includes and src were copied over
-    which pollutes the code base.
-
-  - Would prefer to support disassembler selected at run-time based on
-    what is available in the toolchain.
-
-  - Adding symbols to the trace would significantly improve the debugging
-    productivity. This, ideally, would be provided in the disassembler.
-
-  - Would prefer to wrap the RegFile class in a way that allows selective
-    tracing. Macros are used in the various RV*.h files to capture data.
-    If these operations can be encapsulated in the RegFile class (most of)
-    the macros can be removed.
-
-  - The trace output is simple sent out as log messages. It would
-    be advantageous to allow streaming to other files to allow
-    binary or json output in addition to the text.
-
-  - If the SST machine specified does not match the elf the test behaves
-    unpredictably and the trace disassembly and effects can be very
-    confusing. For example, 
-    	       -march=rv64g  (compiler option)
-               "machine" : "[CORES:RV64G]",  (sst python option).
-
-    The disassembly will show a 'ld' but the effects are for 'lui'
-    and the test crashes.
-
-    It would be helpful to have a consistency check in the REV core
-    to ensure the machine and compiled elf match.
-
-
-
-    

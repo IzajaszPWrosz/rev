@@ -2,6 +2,7 @@ rm -Rf tracer.exe tracer.dis
 /opt/homebrew/bin/riscv64-unknown-elf-g++ -g -O0 -march=rv32i -mabi=ilp32 -o  tracer.exe tracer.c
 /opt/homebrew/bin/riscv64-unknown-elf-objdump -D --source  tracer.exe > tracer.dis
 
+sst rev-test-tracer.py
 SIM_NODES=1
 Building 0
 WARNING: Building component "cpu0" with no links assigned.
