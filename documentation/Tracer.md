@@ -18,15 +18,15 @@ The execution tracer is configured using the following cmake compile options:
 	
  REV_USE_SPIKE :
  	ON  : Use spike libdiasm.a for disassembly
-	OFF : Use internal REV instruction format
+	OFF : Use internal REV instruction format (default)
         
-Requires GCC tools and links to libdisasm.a which is part of rev_isa_sim
-(Spike). If this library is not found the tracer compilation is disabled.
-It can also be explicitely disabled by setting REV_USE_SPIKE = OFF.
+When setting REV_USE_SPIKE to ON, GCC tools and links to libdisasm.a
+must be available. These are part of rev_isa_sim (Spike). If this library is
+not found the tracer should revert to the an internal REV format.
 
 Previous instruction execution trace output is replaced by the compact tracer
 format. Compiling with REV_TRACER=0 will revert the output to to the old
-format.
+format and elliminate any possible performance impacts.
 
 2.2 Runtime options
 -------------------
@@ -116,7 +116,22 @@ RevCPU[cpu0:InstTrace:27093000]: Core 0; Hart 0; Thread 1]; *I 0x10368:00201013 
    |--   Standard logging prefix                           --| key |
     RevCPU[cpu0:InstTrace:18156000]: Core 0; Hart 0; Thread 1]; *I 
 
-4.2 Register to Register Format
+4.2 Instruction Disassembly
+--------------------------
+
+4.2.1 REV_USE_SPIKE=ON
+----------------------
+
+  |  PC  : INSN      |  Disassembly     |
+  0x10474:00c50533    add     a0, a0, a2
+
+4.2.2 REV_USE_SPIKE=OFF
+-----------------------
+
+  |  PC  : INSN      |  Disassembly      |
+  0x10474:00c50533    add %rd, %rs1, %rs2
+
+4.3 Register to Register Format
 --------------------------------
 
   |  PC   : INSN     |  Disassembly             |         Effects          |
@@ -129,7 +144,7 @@ RevCPU[cpu0:InstTrace:27093000]: Core 0; Hart 0; Thread 1]; *I 0x10368:00201013 
    data<-reg  : Source register read
    reg<-data  : Destination register write
 
-4.3 Register to Memory (Store)
+4.4 Register to Memory (Store)
 ------------------------------
   |  PC  : INSN    |     Disassembly    |
   0x10220:fef42623  sw      a5, -20(s0)	 
@@ -137,11 +152,11 @@ RevCPU[cpu0:InstTrace:27093000]: Core 0; Hart 0; Thread 1]; *I 0x10368:00201013 
   |                    Effects                        |
     0x3ffffb60<-s0 0x64<-a5 [0x3ffffb4c,4]<-0x00000064
 
-Effects interpretation:
+  Effects interpretation:
    data<-reg  : Source register read
    [logical address, number of bytes]<-data : write initiated from core
 
-4.4 Memory to Register (Load)
+4.5 Memory to Register (Load)
 -----------------------------
 
   |  PC  : INSN    |    Disassembly      |
@@ -156,7 +171,7 @@ Effects interpretation:
    reg<-data  : Destination register write
    reg<-[logical address, number of bytes] : returning load data
    
-4.5 Program Counter Writes (Branches/Jumps)
+4.6 Program Counter Writes (Branches/Jumps)
 --------------------------------------------
 
   |  PC   | INSN   |  Disassembly  |             Effects                       |
@@ -179,4 +194,8 @@ Effects interpretation:
 
   - Tracing information may be sent to different output streams in more
     compact formats in the future.
+
+  - When using the internal Rev instruction formatter only the opcode
+    is printed. It should be possible to support a full disassembler
+    within REV.
 

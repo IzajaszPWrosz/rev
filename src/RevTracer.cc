@@ -223,14 +223,19 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner(std::string& fallbackMnemonic
         ss_disasm << hex << diasm->disassemble(insn) << "\t";
     else
     #endif
-    {
-        //ss_disasm << hex << setw(8) << setfill('0') << hex << "0x" << insn << "\t";
+    {;
         // TODO internal rev disassembler
+        #if 0
+        // only show mnemonic
         auto pos = fallbackMnemonic.find(' ');
         if (pos != std::string::npos)
             ss_disasm << fallbackMnemonic.substr(0, pos) << "\t";
         else
             ss_disasm << "?" << "\n";
+        #else
+        // show mnemonic and field format strings.
+        ss_disasm << fallbackMnemonic << "\t";
+        #endif
     }
 
     // Initial rendering
@@ -306,12 +311,13 @@ void SST::RevCPU::RevTracer::fmt_reg(uint8_t r, std::stringstream& s)
 {
     #ifdef REV_USE_SPIKE
     if (r<32) {
-        s<<xpr_name[r];
+        s<<xpr_name[r]; // defined in disasm.h 
         return;
     }
     s << "?" << (unsigned)r;
+    #else
+    s << "x" << std::dec << (uint16_t) r; // Use SST::RevCPU::RevReg?
     #endif
-    // TODO internal format
 }
 
 void SST::RevCPU::RevTracer::fmt_data(unsigned len, uint64_t d, std::stringstream &s)
