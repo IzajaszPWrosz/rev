@@ -22,7 +22,6 @@
 #include <type_traits>
 
 #include "RevRegFile.h"
-#include "RevTracer.h"
 
 // Register Decoding Macros
 #define DECODE_RD(x)    (((x)>>(7))&(0b11111))
@@ -76,7 +75,6 @@ enum class RndMode : uint8_t {
   RMM = 4,   // Round to Nearest, ties to Max Magnitude
   DYN = 7,   // In instruction's rm field, selects dynamic rounding mode; invalid in FCSR
 };
-
 
 
 enum RevInstF : int {    ///< Rev CPU Instruction Formats

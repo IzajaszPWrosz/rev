@@ -1932,7 +1932,6 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
     // wait until the counter has been decremented
     // note that this will continue to occur until the counter is drained
     // and the HART is halted
-    // TODO
     output->verbose(CALL_INFO, 9, 0,
                     "Core %" PRIu32 " ; No available thread to exec PC= 0x%" PRIx64 "\n",
                     id, ExecPC);
@@ -1992,7 +1991,6 @@ bool RevProc::ClockTick( SST::Cycle_t currentCycle ){
           break;
         case PanExec::QNull:
           // no work to do; spin on the firmware jump PC
-          // TODO
           output->verbose(CALL_INFO, 6, 0,
                           "Core %" PRIu32 " ; No PAN work to do; Jumping to PC= 0x%" PRIx64 "\n",
                           id, ExecPC);

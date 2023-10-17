@@ -66,7 +66,7 @@ public:
            std::unordered_map<uint32_t, std::shared_ptr<RevThread>>& AssignedThreads,
            std::function<uint32_t()> GetNewThreadID, SST::Output *Output );
 
-  /// RevProc: standard desctructor
+  /// RevProc: standard destructor
   ~RevProc() = default;
 
   /// RevProc: per-processor clock function

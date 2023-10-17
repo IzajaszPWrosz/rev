@@ -155,7 +155,7 @@ void SST::RevCPU::RevTracer::SetFetchedInsn(uint64_t _pc, uint32_t _insn)
     pc = _pc;
 }
 
-bool SST::RevCPU::RevTracer::OutputEnabled()
+bool SST::RevCPU::RevTracer::OutputOK()
 {
     return outputEnabled or events.f.trc_ctl;
 }
@@ -197,7 +197,7 @@ void SST::RevCPU::RevTracer::pcWrite(uint64_t newpc)
 void SST::RevCPU::RevTracer::InstTrace(size_t cycle, unsigned id, unsigned hart, unsigned tid, std::string& fallbackMnemonic)
 {
     CheckUserControls(cycle);
-    if (OutputEnabled()){
+    if (OutputOK()){
         pOutput->verbose(CALL_INFO, 5, 0,
                          "Core %" PRIu32 "; Hart %" PRIu32 "; Thread %" PRIu32 "]; *I %s\n",
                          id, hart, tid, RenderOneLiner(fallbackMnemonic).c_str());

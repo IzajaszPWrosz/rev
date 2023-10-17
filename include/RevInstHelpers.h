@@ -133,6 +133,7 @@ bool fload(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
   if(std::is_same_v<T, double> || F->HasD()){
     static constexpr auto flags = sizeof(T) < sizeof(double) ?
       REVMEM_FLAGS(RevCPU::RevFlag::F_BOXNAN) : REVMEM_FLAGS(0);
+
     uint64_t rs1 = R->GetX<uint64_t>(Inst.rs1);
     req.Set(rs1 + Inst.ImmSignExt(12),
             Inst.rd,

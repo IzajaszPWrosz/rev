@@ -393,7 +393,6 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
     output.verbose(CALL_INFO, 1, 0, "Initialization of PANTest harness complete.\n");
   else
     output.verbose(CALL_INFO, 1, 0, "Initialization of RevCPUs complete.\n");
-
 }
 
 RevCPU::~RevCPU(){

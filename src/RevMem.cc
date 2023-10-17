@@ -801,7 +801,6 @@ bool RevMem::ReadMem(unsigned Hart, uint64_t Addr, size_t Len, void *Target,
 #ifdef _REV_DEBUG_
   std::cout << "NEW READMEM: Reading " << Len << " Bytes Starting at 0x" << std::hex << Addr << std::dec << std::endl;
 #endif
-
   uint64_t pageNum = Addr >> addrShift;
   uint64_t physAddr = CalcPhysAddr(pageNum, Addr);
   //check to see if we're about to walk off the page....

@@ -25,12 +25,6 @@
 #include "RevMem.h"
 #include "RevFeature.h"
 
-//kg prototype - would prefer a register file class to include this
-//             - overloading array [] operator another option (WIP)
-#include "RevTracer.h"
-
-using namespace SST::RevCPU;
-
 namespace SST::RevCPU{
 
 struct RevExt{
