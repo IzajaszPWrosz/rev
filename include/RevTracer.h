@@ -27,6 +27,13 @@
 
 // Integrated Disassembler (toolchain dependent)
 #ifdef REV_USE_SPIKE
+// sst and spike cause redefinition warning for macro UNUSED.
+// sst: #define UNUSED(x) x __attribute__((unused))
+// spike: # define UNUSED __attribute__ ((unused))
+// TODO can these be uniquified?
+#ifdef __GNUC__
+#undef UNUSED
+#endif
 #include "riscv/disasm.h"
 #endif
 
