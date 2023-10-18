@@ -26,16 +26,17 @@
 int main(int argc, char **argv){
 
 #if __riscv_flen >= 32
-  FCVT_TEST( 2,  int32_t, float, fcvt.w.s, -1, -1.1f );
-  FCVT_TEST( 3,  int32_t, float, fcvt.w.s, -1, -1.0f );
-  FCVT_TEST( 4,  int32_t, float, fcvt.w.s,  0, -0.9f );
-  FCVT_TEST( 5,  int32_t, float, fcvt.w.s,  0,  0.9f );
-  FCVT_TEST( 6,  int32_t, float, fcvt.w.s,  1,  1.0f );
-  FCVT_TEST( 7,  int32_t, float, fcvt.w.s,  1,  1.1f );
-  FCVT_TEST( 8,  int32_t, float, fcvt.w.s,  0x7fffff80,  0x1.fffffep+30);
-  FCVT_TEST( 9,  int32_t, float, fcvt.w.s,   INT32_MAX,  0x1.ffffffp+30f );
-  FCVT_TEST(10,  int32_t, float, fcvt.w.s,  0x80000080, -0x1.fffffep+30f);
-  FCVT_TEST(11,  int32_t, float, fcvt.w.s,   INT32_MIN, -0x1.ffffffp+30f );
+  FCVT_TEST( 1,  int32_t, float, fcvt.w.s, -1, -1.1f );
+  FCVT_TEST( 2,  int32_t, float, fcvt.w.s, -1, -1.0f );
+  FCVT_TEST( 3,  int32_t, float, fcvt.w.s,  0, -0.9f );
+  FCVT_TEST( 4,  int32_t, float, fcvt.w.s,  0,  0.9f );
+  FCVT_TEST( 5,  int32_t, float, fcvt.w.s,  1,  1.0f );
+  FCVT_TEST( 6,  int32_t, float, fcvt.w.s,  1,  1.1f );
+  FCVT_TEST( 7,  int32_t, float, fcvt.w.s,  2147483520,  0x1.fffffep+30f );
+  FCVT_TEST( 8,  int32_t, float, fcvt.w.s,   INT32_MAX,  0x1p+31f );
+  FCVT_TEST( 9,  int32_t, float, fcvt.w.s, -2147483520, -0x1.fffffep+30f );
+  FCVT_TEST(10,  int32_t, float, fcvt.w.s,   INT32_MIN, -0x1p+31f );
+  FCVT_TEST(11,  int32_t, float, fcvt.w.s,   INT32_MIN, -0x1.000002p+31f );
 
   FCVT_TEST(12, uint32_t, float, fcvt.wu.s,  0, -1.1f );
   FCVT_TEST(13, uint32_t, float, fcvt.wu.s,  0, -1.0f );
@@ -46,8 +47,8 @@ int main(int argc, char **argv){
   FCVT_TEST(18, uint32_t, float, fcvt.wu.s,  1,  1.0f );
   FCVT_TEST(19, uint32_t, float, fcvt.wu.s,  1,  1.1f );
   FCVT_TEST(20, uint32_t, float, fcvt.wu.s,  0, -3e9f );
-  FCVT_TEST(21, uint32_t, float, fcvt.wu.s, 0xffffff00, 0x1.fffffep+31f );
-  FCVT_TEST(22, uint32_t, float, fcvt.wu.s, UINT32_MAX, 0x1.ffffffp+31f );
+  FCVT_TEST(21, uint32_t, float, fcvt.wu.s, -256, 0x1.fffffep+31f );
+  FCVT_TEST(22, uint32_t, float, fcvt.wu.s, UINT32_MAX, 0x1.0p+32f );
 
 #if __riscv_xlen >= 64
 
@@ -57,11 +58,11 @@ int main(int argc, char **argv){
   FCVT_TEST(26,  int64_t, float, fcvt.l.s,  0,  0.9f );
   FCVT_TEST(27,  int64_t, float, fcvt.l.s,  1,  1.0f );
   FCVT_TEST(28,  int64_t, float, fcvt.l.s,  1,  1.1f );
-  FCVT_TEST(29,  int64_t, float, fcvt.l.s,  0x7fffff8000000000,  0x1.fffffep+62f );
-  FCVT_TEST(30,  int64_t, float, fcvt.l.s,  INT64_MAX,           0x1.ffffffp+62f );
-  FCVT_TEST(31,  int64_t, float, fcvt.l.s,  0x8000010000000000, -0x1.fffffdp+62f );
-  FCVT_TEST(32,  int64_t, float, fcvt.l.s,  0x8000008000000000, -0x1.fffffep+62f );
-  FCVT_TEST(33,  int64_t, float, fcvt.l.s,  INT64_MIN,          -0x1.ffffffp+62f );
+  FCVT_TEST(29,  int64_t, float, fcvt.l.s,  9223371487098961920,   0x1.fffffep+62f );
+  FCVT_TEST(30,  int64_t, float, fcvt.l.s,  INT64_MAX,             0x1.0p+63f );
+  FCVT_TEST(31,  int64_t, float, fcvt.l.s,  -9223370937343148032, -0x1.fffffdp+62f );
+  FCVT_TEST(32,  int64_t, float, fcvt.l.s,  -9223371487098961920, -0x1.fffffep+62f );
+  FCVT_TEST(33,  int64_t, float, fcvt.l.s,  INT64_MIN,          -0x1.0p+63f );
 
   FCVT_TEST(34, uint64_t, float, fcvt.lu.s,  0, -3.0f );
   FCVT_TEST(35, uint64_t, float, fcvt.lu.s,  0, -1.0f );
@@ -70,12 +71,11 @@ int main(int argc, char **argv){
   FCVT_TEST(38, uint64_t, float, fcvt.lu.s,  1,  1.0f );
   FCVT_TEST(39, uint64_t, float, fcvt.lu.s,  1,  1.1f );
   FCVT_TEST(40, uint64_t, float, fcvt.lu.s,  0, -3e9f );
-  FCVT_TEST(41, uint64_t, float, fcvt.lu.s,  0xffffff0000000000,  0x1.fffffep+63f );
-  FCVT_TEST(42, uint64_t, float, fcvt.lu.s,  UINT64_MAX,          0x1.ffffffp+63f );
-  FCVT_TEST(43, uint64_t, float, fcvt.lu.s,  0,                  -0x1.fffffdp+63f );
-  FCVT_TEST(44, uint64_t, float, fcvt.lu.s,  0,                  -0x1.fffffep+63f );
-  FCVT_TEST(45, uint64_t, float, fcvt.lu.s,  0,                  -0x1.ffffffp+63f );
-
+  FCVT_TEST(41, uint64_t, float, fcvt.lu.s,  -1099511627776, 0x1.fffffep+63f );
+  FCVT_TEST(42, uint64_t, float, fcvt.lu.s,  UINT64_MAX,     0x1.0p+64f );
+  FCVT_TEST(43, uint64_t, float, fcvt.lu.s,  0,             -0x1.fffffdp+63f );
+  FCVT_TEST(44, uint64_t, float, fcvt.lu.s,  0,             -0x1.fffffep+63f );
+  FCVT_TEST(45, uint64_t, float, fcvt.lu.s,  0,             -0x1.0p+64f );
 
 #endif
 
@@ -89,9 +89,9 @@ int main(int argc, char **argv){
   FCVT_TEST(49,  int32_t, double, fcvt.w.d,  0,  0.9 );
   FCVT_TEST(50,  int32_t, double, fcvt.w.d,  1,  1.0 );
   FCVT_TEST(51,  int32_t, double, fcvt.w.d,  1,  1.1 );
-  FCVT_TEST(52,  int32_t, double, fcvt.w.d,  0x7fffffff,  0x1.fffffffffffffp+30 );
+  FCVT_TEST(52,  int32_t, double, fcvt.w.d,  2147483647,  0x1.fffffffffffffp+30 );
   FCVT_TEST(53,  int32_t, double, fcvt.w.d,   INT32_MAX,  0x1.0p+31 );
-  FCVT_TEST(54,  int32_t, double, fcvt.w.d,  0x80000001, -0x1.fffffffffffffp+30 );
+  FCVT_TEST(54,  int32_t, double, fcvt.w.d, -2147483647, -0x1.fffffffffffffp+30 );
   FCVT_TEST(55,  int32_t, double, fcvt.w.d,   INT32_MIN, -0x1.0p+31 );
 
   FCVT_TEST(56, uint32_t, double, fcvt.wu.d,  0, -1.1 );
@@ -104,7 +104,7 @@ int main(int argc, char **argv){
   FCVT_TEST(63, uint32_t, double, fcvt.wu.d,  1,  1.1 );
   FCVT_TEST(64, uint32_t, double, fcvt.wu.d,  0, -3e9 );
   FCVT_TEST(65, uint32_t, double, fcvt.wu.d,  UINT32_MAX,  0x1.fffffffffffffp+31 );
-  FCVT_TEST(66, uint32_t, double, fcvt.wu.d,  0xfffffffe,  0x1.fffffffcp+31 );
+  FCVT_TEST(66, uint32_t, double, fcvt.wu.d,  -2,          0x1.fffffffcp+31 );
   FCVT_TEST(67, uint32_t, double, fcvt.wu.d,  UINT32_MAX,  0x1.0p+32 );
 
 #if __riscv_xlen >= 64
@@ -115,9 +115,9 @@ int main(int argc, char **argv){
   FCVT_TEST(71,  int64_t, double, fcvt.l.d,  0,  0.9 );
   FCVT_TEST(72,  int64_t, double, fcvt.l.d,  1,  1.0 );
   FCVT_TEST(73,  int64_t, double, fcvt.l.d,  1,  1.1 );
-  FCVT_TEST(74,  int64_t, double, fcvt.l.d,  0x7ffffffffffffc00,  0x1.fffffffffffffp+62 );
+  FCVT_TEST(74,  int64_t, double, fcvt.l.d,  9223372036854774784,  0x1.fffffffffffffp+62 );
   FCVT_TEST(75,  int64_t, double, fcvt.l.d,  INT64_MAX,  0x1.0p+63 );
-  FCVT_TEST(76,  int64_t, double, fcvt.l.d,  0x8000000000000400, -0x1.fffffffffffffp+62 );
+  FCVT_TEST(76,  int64_t, double, fcvt.l.d, -9223372036854774784, -0x1.fffffffffffffp+62 );
   FCVT_TEST(77,  int64_t, double, fcvt.l.d,  INT64_MIN, -0x1.0p+63 );
 
   FCVT_TEST(78, uint64_t, double, fcvt.lu.d,  0, -3.0 );
@@ -127,10 +127,10 @@ int main(int argc, char **argv){
   FCVT_TEST(82, uint64_t, double, fcvt.lu.d,  1,  1.0 );
   FCVT_TEST(83, uint64_t, double, fcvt.lu.d,  1,  1.1 );
   FCVT_TEST(84, uint64_t, double, fcvt.lu.d,  0, -3e9 );
-  FCVT_TEST(85, uint64_t, double, fcvt.lu.d,  0xfffffffffffff800,  0x1.fffffffffffffp+63 );
-  FCVT_TEST(86, uint64_t, double, fcvt.lu.d,  0,                  -0x1.fffffffffffffp+63 );
-  FCVT_TEST(87, uint64_t, double, fcvt.lu.d,  0,                  -0x1.0p+64 );
-  FCVT_TEST(88, uint64_t, double, fcvt.lu.d,  UINT64_MAX,          0x1.0p+64 );
+  FCVT_TEST(85, uint64_t, double, fcvt.lu.d, -2048,       0x1.fffffffffffffp+63 );
+  FCVT_TEST(86, uint64_t, double, fcvt.lu.d,  0,         -0x1.fffffffffffffp+63 );
+  FCVT_TEST(87, uint64_t, double, fcvt.lu.d,  0,         -0x1.0p+64 );
+  FCVT_TEST(88, uint64_t, double, fcvt.lu.d,  UINT64_MAX, 0x1.0p+64 );
 
 #endif
 

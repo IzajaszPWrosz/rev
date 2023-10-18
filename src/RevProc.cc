@@ -1386,14 +1386,16 @@ RevInst RevProc::DecodeInst(){
   // Stage 7: Look up the value in the table
   auto it = EncToEntry.find(Enc);
 
-  if( inst65 == 0b10 && it == EncToEntry.end() ){
-    // This is kind of a hack, but we may not have found the instruction
-    // because Funct3 is overloaded with rounding mode, so if this is a RV32F
-    // or RV64F set Funct3 to zero and check again
+  // This is kind of a hack, but we may not have found the instruction because
+  // Funct3 is overloaded with rounding mode, so if this is a RV32F or RV64F
+  // set Funct3 to zero and check again. We exclude if Funct3 == 0b101 ||
+  // Funct3 == 0b110 because those are invalid FP rounding mode (rm) values.
+  if( inst65 == 0b10 && Funct3 != 0b101 && Funct3 != 0b110 && it == EncToEntry.end() ){
     Enc &= 0xfffff8ff;
     it = EncToEntry.find(Enc);
   }
 
+  // If we did not find a valid instruction, look for a coprocessor instruction
   if( it == EncToEntry.end() ){
     bool isCoProcInst = coProc && coProc->IssueInst(feature, RegFile, mem, Inst);
     if(isCoProcInst){
@@ -1406,8 +1408,8 @@ RevInst RevProc::DecodeInst(){
     }
   }
 
+  // Failed to decode the instruction
   if( it == EncToEntry.end() ){
-      // failed to decode the instruction
       output->fatal(CALL_INFO, -1,
                     "Error: failed to decode instruction at PC=0x%" PRIx64
                     "; Enc=%" PRIu32 "\n", PC, Enc );
