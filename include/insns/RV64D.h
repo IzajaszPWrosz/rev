@@ -24,29 +24,32 @@ class RV64D : public RevExt {
   static constexpr auto& fcvtlud = CvtFpToInt<double, uint64_t>;
 
   static bool fcvtdl(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
-    R->DPF[Inst.rd] = static_cast<double>(R->GetX<int64_t>(Inst.rs1));
-    R->AdvancePC(Inst.instSize);
+    R->SetFP(Inst.rd, static_cast<double>(R->GetX<int64_t>(Inst.rs1)));
+    R->AdvancePC(Inst);
     return true;
   }
 
   static bool fcvtdlu(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
-    R->DPF[Inst.rd] = static_cast<double>(R->GetX<uint64_t>(Inst.rs1));
-    R->AdvancePC(Inst.instSize);
+    R->SetFP(Inst.rd, static_cast<double>(R->GetX<uint64_t>(Inst.rs1)));
+    R->AdvancePC(Inst);
     return true;
   }
 
   static bool fmvxd(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
     uint64_t u64;
-    memcpy(&u64, &R->DPF[Inst.rs1], sizeof(u64));
+    double fp = R->GetFP<double>(Inst.rs1);
+    memcpy(&u64, &fp, sizeof(u64));
     R->SetX(Inst.rd, u64);
-    R->AdvancePC(Inst.instSize);
+    R->AdvancePC(Inst);
     return true;
   }
 
   static bool fmvdx(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
     uint64_t u64 = R->GetX<uint64_t>(Inst.rs1);
-    memcpy(&R->DPF[Inst.rs1], &u64, sizeof(double));
-    R->AdvancePC(Inst.instSize);
+    double fp;
+    memcpy(&fp, &u64, sizeof(fp));
+    R->SetFP(Inst.rs1, fp);
+    R->AdvancePC(Inst);
     return true;
   }
 
