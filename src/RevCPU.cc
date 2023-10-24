@@ -99,8 +99,10 @@ RevCPU::RevCPU( SST::ComponentId_t id, const SST::Params& params )
   if( numHarts > _MAX_HARTS_ ){
     output.fatal(CALL_INFO, -1, "Error: number of harts must be <= %" PRIu32 "\n", _MAX_HARTS_);
   }
+  #ifdef _PAN_
   if( EnablePANTest )
     numCores = 1; // force the PAN test to use a single core
+  #endif
   output.verbose(CALL_INFO, 1, 0,
                  "Building Rev with %" PRIu32 " cores and %" PRIu32 " hart(s) on each core \n",
                  numCores, numHarts);
