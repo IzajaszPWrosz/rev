@@ -196,11 +196,6 @@ public:
     MarkLoadCompleteFunc(req);
   }
 
-  /// Return the Floating-Point Rounding Mode
-  FRMode GetFPRound() const{
-    return static_cast<FRMode>(fcsr.frm);
-  }
-
   /// Capture the PC of current instruction which raised exception
   void SetSEPC(){
     if( IsRV32 ){
@@ -323,6 +318,16 @@ public:
       SPF[size_t(rd)] = value;               // Store in FP32 register
     }
   }
+
+  /// Return the Floating-Point Status Register
+  FCSR& GetFCSR() { return fcsr; }
+  const FCSR& GetFCSR() const { return fcsr; }
+
+  /// Get the Floating-Point Rounding Mode
+  FRMode GetFRM() const { return static_cast<FRMode>(fcsr.frm); }
+
+  /// Set the Floating-Point Rounding Mode
+  void SetFRM(FRMode rm) { fcsr.frm = static_cast<uint8_t>(rm); }
 
   // Friend functions and classes to access internal register state
   template<typename FP, typename INT>

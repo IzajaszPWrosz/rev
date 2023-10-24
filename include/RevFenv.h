@@ -11,8 +11,9 @@
 #ifndef _REV_FENV_H_
 #define _REV_FENV_H_
 
+#include <cmath>
 #include <cfenv>
-#include <memory>
+#include <stdexcept>
 
 // GCC and Clang do not fully support FENV_ACCESS now. See:
 //
@@ -30,10 +31,11 @@ namespace SST::RevCPU{
 // TODO: Right now we only need to save/restore rounding mode.
 // Later, we may need to save and restore the entire fenv_t state
 class RevFenv{
-  int saved_round;      ///< Saved Floating-Point Rounding Mode
+  FCSR& fcsr;
+  std::fenv_t saved_env;
 
   // We use Meyers singleton to avoid initialization order fiasco
-  static int& round(){
+  static int& roundingMode(){
     thread_local int round = fegetround();
     return round;
   }
@@ -41,14 +43,27 @@ class RevFenv{
 public:
 
   /// Constructor saves Fenv state
-  RevFenv() : saved_round(round()) {
-    if(saved_round < 0){
-      throw std::runtime_error("Getting floating-point rounding mode with fegetround() is not working.");
+  explicit RevFenv(FCSR& fcsr) : fcsr(fcsr){
+    // Save FP environment and set flags to default
+    if(feholdexcept(&saved_env)){
+      throw std::runtime_error("Getting floating-point environment with feholdexcept() is not working.");
     }
   }
 
-  /// Destructor restores Fenv state
-  ~RevFenv() { SetRound(saved_round); }
+  /// Destructor sets flags and restores Fenv state
+  ~RevFenv(){
+    // RISC-V does not support FP traps
+    // Set the accumulated fflags based on exceptions
+    int except = std::fetestexcept(FE_ALL_EXCEPT);
+    if(except & FE_DIVBYZERO) fcsr.DZ = true;
+    if(except & FE_INEXACT)   fcsr.NX = true;
+    if(except & FE_INVALID)   fcsr.NV = true;
+    if(except & FE_OVERFLOW)  fcsr.OF = true;
+    if(except & FE_UNDERFLOW) fcsr.UF = true;
+
+    // Restore the host's saved FP Environment
+    fesetenv(&saved_env);
+  }
 
   // We allow moving, but not copying RevFenv
   // This is to ensure that there is only a single copy
@@ -61,21 +76,22 @@ public:
   RevFenv& operator=(RevFenv&&) = delete;
 
   // Get the current FP rounding state
-  static int GetRound(){
-    return round();
+  static int GetRoundingMode(){
+    return roundingMode();
   }
 
   // Set the FP rounding state if it differs from current
-  static int SetRound(int mode){
+  static int SetRoundingMode(int mode){
     int rc = 0;
-    if(mode != round()){
+    if(mode != roundingMode()){
       rc = fesetround(mode);
       if(rc == 0){
-        round() = mode;
+        roundingMode() = mode;
       }
     }
     return rc;
   }
+
 }; // RevFenv
 
 } // namespace SST::RevCPU

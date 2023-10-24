@@ -20,6 +20,7 @@
 #include <utility>
 
 #include "RevInstTable.h"
+#include "RevFenv.h"
 
 namespace SST::RevCPU{
 
@@ -338,6 +339,17 @@ bool bcond(RevFeature *F, RevRegFile *R, RevMem *M, RevInst Inst) {
     R->AdvancePC(Inst);
   }
   return true;
+}
+
+/// Rev FMA template which handles 0.0 * NAN and NAN * 0.0 correctly
+// RISC-V requires INVALID exception even when z = qNaN
+template<typename T, typename U, typename V>
+auto rev_fma(T x, U y, V z){
+  using C = std::common_type_t<T,U,V>;
+  if((!y && std::isinf(x)) || (!x && std::isinf(y))){
+    feraiseexcept(FE_INVALID);
+  }
+  return std::fma(C{x}, C{y}, C{z});
 }
 
 } // namespace SST:RevCPU
