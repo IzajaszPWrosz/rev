@@ -35,6 +35,9 @@ int main(int argc, char **argv){
   FCVT_TEST(  5,   int32_t,   float,   fcvt.w.s,                     1,                    1.0f,  rtz );
   FCVT_TEST(  6,   int32_t,   float,   fcvt.w.s,                     1,                    1.1f,  rtz );
   FCVT_TEST(  7,   int32_t,   float,   fcvt.w.s,            2147483520,         0x1.fffffep+30f,  rtz );
+
+   asm volatile("slli x0,x0,1");
+   
   FCVT_TEST(  8,   int32_t,   float,   fcvt.w.s,             INT32_MAX,                0x1p+31f,  rtz );
   FCVT_TEST(  9,   int32_t,   float,   fcvt.w.s,           -2147483520,        -0x1.fffffep+30f,  rtz );
   FCVT_TEST( 10,   int32_t,   float,   fcvt.w.s,             INT32_MIN,               -0x1p+31f,  rtz );
